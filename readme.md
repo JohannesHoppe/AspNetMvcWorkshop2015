@@ -1,21 +1,22 @@
 # Fragen zur Vorbereitung
 
-MVC Pattern – Was ist ein Model? Was ist ein View? Was ist ein Controller? Was ist ein ViewModel?
-Was ist die Razor-Engine?
-Was ist Routing?
+1. MVC Pattern – Was ist ein Model? Was ist ein View? Was ist ein Controller? Was ist ein ViewModel?
+2. Was ist die Razor-Engine?
+3. Was ist Knockout.js?
+4. Was ist Routing?
 
 # Agenda
 
 
-# Tag 1 - ASP.NET Web API
+# Tag 1 - ASP.NET Web API & C# Unit Testing
 1. Anlegen von DTOs / POCOs (Geschäftsobjekte)
 2. IoC, Dependency Injection
 3. Einrichten von Entity Framework, Code First – Besprechung: Mockbarer Context (DbContext)
-4. Repository (CRUD) – Tests!
+4. Repository (CRUD) – Tests (State Driven Tests)
 5. Web API Controllers 
 6. REST & Hypermedia (kurz angerissen)
 
-    Technologien: Autofac, MSpec, Moq, EF, Web API, OData
+    Technologien: ASP.NET WebApi, Autofac, MSpec, Moq, EF, Web API
 
 
 ## Tag 2 - ASP.NET MVC
@@ -24,6 +25,8 @@ Was ist Routing?
 3. ActionFilter
 4. OData (IQueryable)
 5. Daten anzeigen per Grid und Chart
+
+    Technologien: ASP.NET MVC, OData, ggf. Kendo UI 
 
 
 ## Tag 3 - JavaScript
@@ -46,16 +49,18 @@ Was ist Routing?
 
     --> Ziel: grid integrieren
 
-## Tag 5 - SignalR
-
-1. SignalR
-
 Beispiel:
 ```
     $(#button).hide(); // Prozedual
     <button data-bind="visible: !data.length">:-)</button> // Bindings (MVVM)
 ```
 
+## Tag 5 - SignalR & JavaScript Unit Testing
+
+1. SignalR
+2. JavaScript Unit-Tests (Behaviour Driven Tests)
+
+    Technologien: node.js /npm, Karma Testrunner, Jasmine
 
 
 
