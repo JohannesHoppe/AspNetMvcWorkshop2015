@@ -14,7 +14,12 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private DataContext db = new DataContext();
+        private DataContext db; 
+
+        public CustomersController(DataContext db)
+        {
+            this.db = db;
+        }
 
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
@@ -99,15 +104,6 @@ namespace AcTraining.Controllers
             db.SaveChanges();
 
             return Ok(customer);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private bool CustomerExists(int id)
