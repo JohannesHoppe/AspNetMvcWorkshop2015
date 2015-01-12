@@ -12,7 +12,12 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 7. [REST & Hypermedia](#rest)
 
 
-
+## Aufgaben:
+1. Erstelle ein Projekt mit Nuget
+2. Implementiere IoC mit Autofac
+3. Lege einen Web API Controller an
+4. Lade Daten per $.get und $.post
+5. **Erstelle das CustomerRepository** (Verwende IoC)
 
 
 <a name="projekt"></a>
