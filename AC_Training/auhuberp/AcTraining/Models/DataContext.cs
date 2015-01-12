@@ -1,13 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Web;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace AcTraining.Models
 {
-	public class DataContext : DbContext
-	{
-		public DbSet<Customer> Customers { get; set; }
-	}
+    public class DataContext: DbContext 
+    {
+        public DataContext(DbConnection connection) : base(connection, true)
+        {
+            
+        }
+
+        public DbSet<Customer> Customers { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingEntitySetNameConvention>();
+            modelBuilder.Conventions.Remove<StringLengthAttributeConvention>();
+        }
+
+    }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using AcTraining.Models;
@@ -14,7 +11,12 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private DataContext db = new DataContext();
+        private readonly DataContext db;
+
+        public CustomersController(DataContext db)
+        {
+            this.db = db;
+        }      
 
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
@@ -61,10 +63,7 @@ namespace AcTraining.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -99,15 +98,6 @@ namespace AcTraining.Controllers
             db.SaveChanges();
 
             return Ok(customer);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private bool CustomerExists(int id)
