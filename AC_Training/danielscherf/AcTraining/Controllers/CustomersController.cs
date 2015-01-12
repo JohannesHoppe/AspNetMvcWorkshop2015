@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -11,24 +11,23 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly DataContext db;
+        private readonly CustomerRepository _customerRepository;
 
-        public CustomersController(DataContext db)
+        public CustomersController(CustomerRepository customerRepository)
         {
-            this.db = db;
-        }      
+            _customerRepository = customerRepository;
+        }
 
-        // GET: api/Customers
-        public IQueryable<Customer> GetCustomers()
+        public IEnumerable<Customer> GetCustomers()
         {
-            return db.Customers;
+            return _customerRepository.GetCustomers();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = _customerRepository.GetCustomer(id);
             if (customer == null)
             {
                 return NotFound();
@@ -46,16 +45,16 @@ namespace AcTraining.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != customer.Id)
+            if (customer.Id == 0)
             {
                 return BadRequest();
             }
 
-            db.Entry(customer).State = EntityState.Modified;
+            //_db.Entry(customer).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+               _customerRepository.Update(customer);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,8 +77,7 @@ namespace AcTraining.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            _customerRepository.Insert(customer);
 
             return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
@@ -88,21 +86,18 @@ namespace AcTraining.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = _customerRepository.Delete(id);
             if (customer == null)
             {
                 return NotFound();
             }
-
-            db.Customers.Remove(customer);
-            db.SaveChanges();
 
             return Ok(customer);
         }
 
         private bool CustomerExists(int id)
         {
-            return db.Customers.Count(e => e.Id == id) > 0;
+            return _customerRepository.CustomerExists(id);
         }
     }
 }
