@@ -13,7 +13,7 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 
 
 ## Aufgaben:
-1. Erstelle eine Projekt mit Nuget
+1. Erstelle ein Projekt mit Nuget
 2. Implementiere IoC mit Autofac
 3. Lege einen Web API Controller an
 4. Lade Daten per $.get und $.post
