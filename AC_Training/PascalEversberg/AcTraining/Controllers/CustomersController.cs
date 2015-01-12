@@ -11,24 +11,24 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly DataContext db;
+        private readonly CustomerRepository rep;
 
-        public CustomersController(DataContext db)
+        public CustomersController(CustomerRepository rep)
         {
-            this.db = db;
+            this.rep = rep;
         }      
 
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
         {
-            return db.Customers;
+            return rep.GetCustomers();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = rep.GetCustomer(id);
             if (customer == null)
             {
                 return NotFound();
@@ -51,20 +51,7 @@ namespace AcTraining.Controllers
                 return BadRequest();
             }
 
-            db.Entry(customer).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
+            rep.UpdateCustomer(id, customer);
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -73,36 +60,28 @@ namespace AcTraining.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult PostCustomer(Customer customer)
         {
-            if (!ModelState.IsValid)
+            var newCustomer = rep.CreateCustomer(customer);
+            if (newCustomer == null)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Customers.Add(customer);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
+            return CreatedAtRoute("DefaultApi", new { id = newCustomer.Id }, newCustomer);
         }
 
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            Customer cust = rep.DeleteCustomer(id);
+
+            if (cust == null)
             {
                 return NotFound();
             }
 
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-
-            return Ok(customer);
+            return Ok(cust);
         }
 
-        private bool CustomerExists(int id)
-        {
-            return db.Customers.Count(e => e.Id == id) > 0;
-        }
     }
 }
