@@ -11,24 +11,25 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly DataContext db;
+        //private readonly DataContext db;
+        private readonly Models.CustomerRepository _custRep;
 
-        public CustomersController(DataContext db)
+        public CustomersController(CustomerRepository customerRep)
         {
-            this.db = db;
+            _custRep = customerRep;
         }      
 
         // GET: api/Customers
-        public IQueryable<Customer> GetCustomers()
+        public IQueryable<Customer> GetCustomers()    
         {
-            return db.Customers;
+            return _custRep.GetCustomers();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = _custRep.GetCustomer(id);
             if (customer == null)
             {
                 return NotFound();
@@ -37,36 +38,17 @@ namespace AcTraining.Controllers
             return Ok(customer);
         }
 
-        // PUT: api/Customers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomer(int id, Customer customer)
+        // DELETE: api/Customers/5
+        [ResponseType(typeof(Customer))]
+        public IHttpActionResult DeleteCustomer(int id)
         {
-            if (!ModelState.IsValid)
+            Customer customer = _custRep.GetCustomer(id);
+            if (customer != null)
             {
-                return BadRequest(ModelState);
+                _custRep.DeleteCustomer(customer);
+                return Ok(customer);
             }
-
-            if (id != customer.Id)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(customer).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return NotFound();         
         }
 
         // POST: api/Customers
@@ -78,31 +60,32 @@ namespace AcTraining.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            _custRep.CreateCustomer(customer);
 
             return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
 
-        // DELETE: api/Customers/5
-        [ResponseType(typeof(Customer))]
-        public IHttpActionResult DeleteCustomer(int id)
+        // PUT: api/Customers/5
+        [ResponseType(typeof(void))]
+        public IHttpActionResult PutCustomer(int id, Customer customer)
         {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
 
-            db.Customers.Remove(customer);
-            db.SaveChanges();
+            if (0 == customer.Id)
+            {
+                return BadRequest();
+            }
 
-            return Ok(customer);
+           if (_custRep.UpdateCustomer(id, customer) != true)
+               return NotFound();
+
+           return Ok(customer);
+            //return StatusCode(HttpStatusCode.NoContent);
         }
 
-        private bool CustomerExists(int id)
-        {
-            return db.Customers.Count(e => e.Id == id) > 0;
-        }
+
     }
 }
