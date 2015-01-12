@@ -11,24 +11,24 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly DataContext db;
+        private readonly CustomerRepository cr;
 
         public CustomersController(DataContext db)
         {
-            this.db = db;
+            this.cr = new CustomerRepository(db);
         }      
 
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
         {
-            return db.Customers;
+            return cr.GetCustomers();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = cr.GetCustomer(id);
             if (customer == null)
             {
                 return NotFound();
@@ -51,19 +51,11 @@ namespace AcTraining.Controllers
                 return BadRequest();
             }
 
-            db.Entry(customer).State = EntityState.Modified;
+            bool retVal = cr.UpdateCustomer(id, customer);
 
-            try
+            if (!cr.CustomerExists(id))
             {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -78,8 +70,7 @@ namespace AcTraining.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            bool retVal = cr.InsertCustomer(customer);
 
             return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
         }
@@ -88,21 +79,12 @@ namespace AcTraining.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
+            Customer deletedCustomer;
+            
+            if(!cr.DeleteCustomer(id, out deletedCustomer))
                 return NotFound();
-            }
 
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-
-            return Ok(customer);
-        }
-
-        private bool CustomerExists(int id)
-        {
-            return db.Customers.Count(e => e.Id == id) > 0;
+            return Ok(deletedCustomer);
         }
     }
 }

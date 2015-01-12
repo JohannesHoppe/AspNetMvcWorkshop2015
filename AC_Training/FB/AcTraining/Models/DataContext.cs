@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace AcTraining.Models
 {
-    public class DataContext: DbContext 
+    public class DataContext : DbContext 
     {
         public DataContext(DbConnection connection) : base(connection, true)
         {

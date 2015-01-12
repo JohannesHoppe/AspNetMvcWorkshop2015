@@ -15,10 +15,18 @@ namespace AcTraining
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+              name: "ApiErdbeer",
+              routeTemplate: "api/Erdbeer",
+              defaults: new { controller = "Customers" }
+          );
+            
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+          
         }
     }
 }

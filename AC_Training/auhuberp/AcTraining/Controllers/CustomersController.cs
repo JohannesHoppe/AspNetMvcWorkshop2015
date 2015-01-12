@@ -9,100 +9,78 @@ using AcTraining.Models;
 
 namespace AcTraining.Controllers
 {
-    public class CustomersController : ApiController
-    {
-        private readonly DataContext db;
+	public class CustomersController : ApiController
+	{
+		private readonly CustomerRepository cr;
 
-        public CustomersController(DataContext db)
-        {
-            this.db = db;
-        }      
+		public CustomersController(CustomerRepository cr)
+		{
+			this.cr = cr;
+		}
 
-        // GET: api/Customers
-        public IQueryable<Customer> GetCustomers()
-        {
-            return db.Customers;
-        }
+		// GET: api/Customers
+		public IQueryable<Customer> GetCustomers()
+		{
+			return cr.GetCustomers();
+		}
 
-        // GET: api/Customers/5
-        [ResponseType(typeof(Customer))]
-        public IHttpActionResult GetCustomer(int id)
-        {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
+		// GET: api/Customers/5
+		[ResponseType(typeof(Customer))]
+		public IHttpActionResult GetCustomer(int id)
+		{
+			var customer = cr.GetCustomer(id);
+			if (customer == null)
+				return NotFound();
+			return Ok(customer);
+		}
 
-            return Ok(customer);
-        }
+		// PUT: api/Customers/5
+		[ResponseType(typeof(void))]
+		public IHttpActionResult PutCustomer(int id, Customer customer)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-        // PUT: api/Customers/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomer(int id, Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			var updRet = cr.UpdateCustomer(id, customer);
 
-            if (id != customer.Id)
-            {
-                return BadRequest();
-            }
+			if (updRet == CustomerRepository.UpdateRetVals.BadRequest)
+				return BadRequest();
+			else if (updRet == CustomerRepository.UpdateRetVals.NotFound)
+				return NotFound();
 
-            db.Entry(customer).State = EntityState.Modified;
+			return StatusCode(HttpStatusCode.NoContent);
+		}
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
+		// POST: api/Customers
+		[ResponseType(typeof(Customer))]
+		public IHttpActionResult PostCustomer(Customer customer)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+			cr.CreateCustomer(customer);
 
-        // POST: api/Customers
-        [ResponseType(typeof(Customer))]
-        public IHttpActionResult PostCustomer(Customer customer)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+			return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
+		}
 
-            db.Customers.Add(customer);
-            db.SaveChanges();
+		// DELETE: api/Customers/5
+		[ResponseType(typeof(Customer))]
+		public IHttpActionResult DeleteCustomer(int id)
+		{
+			Customer customer = null;
+			if (cr.DeleteCustomer(id, out customer))
+			{
+				return NotFound();
+			}
+			else
+			{
+			return Ok(customer);			
+			}
+		}
 
-            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
-        }
-
-        // DELETE: api/Customers/5
-        [ResponseType(typeof(Customer))]
-        public IHttpActionResult DeleteCustomer(int id)
-        {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-
-            return Ok(customer);
-        }
-
-        private bool CustomerExists(int id)
-        {
-            return db.Customers.Count(e => e.Id == id) > 0;
-        }
-    }
+	}
 }
