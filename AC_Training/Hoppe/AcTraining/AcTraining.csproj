@@ -184,6 +184,7 @@
     </Compile>
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\DataContext.cs" />
+    <Compile Include="Controllers\RequestTimingFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

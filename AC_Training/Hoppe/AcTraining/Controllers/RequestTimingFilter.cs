@@ -1,29 +1,4 @@
-# Fünftägiger ASP.NET MVC Workshop
-Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement AG](http://www.conplement.de/)
-
-## Tag 2 - Agenda
-
-1. Besprechung Ergebnisse Refactoring, Unit Testing 
-1. [Action Filter (MVC)](#filter)
-
-
-
-<a name="filter"></a>
-## 1. Action Filter (MVC)
-
-Action Filter bieten die Möglichkeit, vor und zwischen diesen Schritten benutzerdefinierte Logiken zur Ausführung zu bringen, wobei ein Filter auf
-beliebig viele Seiten angewandt werden kann.
-
-IAuthorizationFilter / OnAuthorization: Wird ausgeführt, bevor die Anfrage abgearbeitet wird
-IActionFilter / OnActionExecuting: Wird vor der Action-Methode ausgeführt
-IActionFilter / OnActionExecuted: Wird nach der Action-Methode ausgeführt
-IResultFilter / OnResultExecuting: Wird vor dem Action-Ergebnis (z. B. View) ausgeführt
-IResultFilter / OnResultExecuted: Wird nach dem Action-Ergebnis (z. B. View) ausgeführt
-IExceptionFilter / OnException: Wird ausgeführt, wenn eine Ausnahme ausgelöst wurde
-
-Beispiel
-```
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Web.Mvc;
 
 namespace AcTraining.Controllers
@@ -46,21 +21,37 @@ namespace AcTraining.Controllers
             return result;
         }
 
+        /// <summary>
+        ///   Called before an action method executes.
+        /// </summary>
+        /// <param name = "filterContext">The filter context.</param>
         public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             GetTimer(filterContext, "action").Start();
         }
 
+        /// <summary>
+        ///   Called after the action method executes.
+        /// </summary>
+        /// <param name = "filterContext">The filter context.</param>
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
             GetTimer(filterContext, "action").Stop();
         }
 
+        /// <summary>
+        ///   Called before an action result executes.
+        /// </summary>
+        /// <param name = "filterContext">The filter context.</param>
         public void OnResultExecuting(ResultExecutingContext filterContext)
         {
             GetTimer(filterContext, "render").Start();
         }
 
+        /// <summary>
+        /// Called after an action result executes.
+        /// </summary>
+        /// <param name = "filterContext">The filter context.</param>
         public void OnResultExecuted(ResultExecutedContext filterContext)
         {
             var renderTimer = GetTimer(filterContext, "render");
@@ -82,8 +73,3 @@ namespace AcTraining.Controllers
         }
     }
 }
-```
-
-<hr>
-
-_&copy; 2015, Johannes Hoppe_
