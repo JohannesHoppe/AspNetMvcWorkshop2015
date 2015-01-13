@@ -1,8 +1,23 @@
-﻿<div class="jumbotron">
+﻿@using AcTraining.Models
+
+@model string
+
+<div class="jumbotron">
     <h1>Johannes!</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>
+    </p>
 </div>
+
+@section footer
+{
+    <h1>@Model</h1>
+}
+
+@Html.ActionLink("Gehe zu Test", "Test", "Home")
+
+@Html.Partial("Test", new Customer {FirstName = "Verena", LastName = DateTime.Now.ToLongTimeString()})
+
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
