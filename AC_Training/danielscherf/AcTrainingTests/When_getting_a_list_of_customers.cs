@@ -13,7 +13,7 @@ namespace AcTrainingTests
     [Subject(typeof(CustomerRepository))]
     public class When_getting_a_list_of_customers : EstablishContext
     {
-        private static CustomerRepository repository;
+        //private static CustomerRepository repository;
         private static IEnumerable<Customer> result;
 
         private Establish context = () =>

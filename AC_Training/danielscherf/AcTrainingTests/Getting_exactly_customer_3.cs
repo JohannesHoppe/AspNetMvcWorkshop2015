@@ -15,7 +15,7 @@ namespace AcTrainingTests
     [Subject(typeof(CustomerRepository))]
     public class Getting_exactly_customer_3 : EstablishContext
     {
-        private static CustomerRepository repository;
+        //private static CustomerRepository repository;
         private static Customer customer;
 
         private Establish context = () =>

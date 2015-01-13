@@ -13,6 +13,7 @@ namespace AcTrainingTests
     public class EstablishContext
     {
         public static CustomerRepository repository;
+
         public static Establish CreateContext()
         {
     
