@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AcTraining.Controllers;
 using AcTraining.Models;
 using Machine.Specifications;
+using NSubstitute;
 
 namespace AcTrainingTests
 {
@@ -18,10 +19,11 @@ namespace AcTrainingTests
         {
             //Moq
             //NSubstitute
+            var rep = Substitute.For<ICustomerRepository>();
 
             ICustomerRepository repository = null;
 
-            controller = new CustomersController();
+            controller = new CustomersController(rep);
         };
     }
 }
