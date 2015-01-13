@@ -2,11 +2,12 @@
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.OData;
 using AcTraining.Models;
 
 namespace AcTraining.Controllers
 {
-    public class CustomersController : ApiController
+    public class CustomersController : ODataController
     {
         private readonly ICustomerRepository _customerRep;
 
