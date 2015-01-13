@@ -8,6 +8,12 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 2. [Action Filter (MVC)](#filter)
 2. [OData](#odata)
 
+## Aufgaben
+
+###1. Schreibt einen Test, der beweist das CustomerRepository.GetCustomer(3) auch tatsächlich den Kunden Nr. 3 zurück gibt!
+
+###2. Definiert im HomeController.Index einen Text (Model), dieser soll im View per section angereichert werden (z.B. h1) und diese section soll als Footer in der Layout.cshtml erscheinen.
+
 
 <a name="mspec"></a>
 ## 1. Ein einfacher Test mit MSpec

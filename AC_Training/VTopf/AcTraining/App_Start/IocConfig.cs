@@ -38,11 +38,11 @@ namespace AcTraining.App_Start
                 .InstancePerRequest();
 
             // register own types here!!!
-            /*
-            builder.RegisterType<Listener>()
-                .As<IListener>()
+            
+            builder.RegisterType<CustomerRepository>()
+                .As<ICustomerRepository>()
                 .InstancePerRequest();
-            */
+            
 
             var container = builder.Build();
 

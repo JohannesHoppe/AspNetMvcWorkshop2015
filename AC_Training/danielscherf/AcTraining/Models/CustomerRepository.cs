@@ -9,7 +9,7 @@ using NMemory.Linq;
 
 namespace AcTraining.Models
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private DataContext _db;
 

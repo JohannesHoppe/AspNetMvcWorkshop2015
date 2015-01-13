@@ -11,9 +11,9 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly CustomerRepository _customerRep;
+        private readonly ICustomerRepository _customerRep;
 
-        public CustomersController(CustomerRepository customerRep)
+        public CustomersController(ICustomerRepository customerRep)
         {
             this._customerRep = customerRep;
         }      

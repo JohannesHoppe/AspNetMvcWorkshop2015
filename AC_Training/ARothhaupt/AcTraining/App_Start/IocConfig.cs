@@ -35,6 +35,7 @@ namespace AcTraining.App_Start
                 .InstancePerRequest();
 
             builder.RegisterType<CustomerRepository>()
+                 .As<ICustomerRepository>()
               .InstancePerRequest();
 
             // register own types here!!!

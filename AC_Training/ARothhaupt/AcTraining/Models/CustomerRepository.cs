@@ -13,7 +13,7 @@ using System.Net;
 
 namespace AcTraining.Models
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly DataContext db;
 

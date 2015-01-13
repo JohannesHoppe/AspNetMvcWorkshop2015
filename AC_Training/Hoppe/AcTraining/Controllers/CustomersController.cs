@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -11,24 +8,25 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly DataContext db;
+        private readonly ICustomerRepository _customerRep;
 
-        public CustomersController(DataContext db)
+        public CustomersController(ICustomerRepository customerRep)
         {
-            this.db = db;
+            _customerRep = customerRep;
         }      
 
         // GET: api/Customers
+
         public IQueryable<Customer> GetCustomers()
         {
-            return db.Customers;
+            return _customerRep.GetCustomers();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
+            Customer customer = _customerRep.GetCustomer(id);
             if (customer == null)
             {
                 return NotFound();
@@ -37,72 +35,53 @@ namespace AcTraining.Controllers
             return Ok(customer);
         }
 
+        [Route("api/Customers/{id}/MoveToArchive")]
+        [HttpGet]
+        public void MoveToArchive(int id)
+        {
+            var c = _customerRep.GetCustomer(id);
+            c.LastName = "Archived";
+            _customerRep.UpdateCustomer(c);
+        }
+
         // PUT: api/Customers/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutCustomer(int id, Customer customer)
+        public IHttpActionResult PutCustomer(Customer customer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != customer.Id)
+            if (customer.Id == 0)
             {
                 return BadRequest();
             }
 
-            db.Entry(customer).State = EntityState.Modified;
+            _customerRep.UpdateCustomer(customer);
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomerExists(id))
-                {
-                    return NotFound();
-                }
-                throw;
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            return StatusCode(HttpStatusCode.OK);
         }
 
         // POST: api/Customers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult PostCustomer(Customer customer)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.Customers.Add(customer);
-            db.SaveChanges();
-
-            return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
+            if(_customerRep.CreateCustomer(customer) == CustomerState.State.Ok)
+                return CreatedAtRoute("DefaultApi", new { id = customer.Id }, customer);
+            else
+                return Conflict();
         }
 
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer customer = db.Customers.Find(id);
-            if (customer == null)
-            {
+            Customer customer = _customerRep.DeleteCustomer(id);
+            if(customer == null)
                 return NotFound();
-            }
-
-            db.Customers.Remove(customer);
-            db.SaveChanges();
-
-            return Ok(customer);
-        }
-
-        private bool CustomerExists(int id)
-        {
-            return db.Customers.Count(e => e.Id == id) > 0;
+            else
+                return Ok(customer);
         }
     }
 }
