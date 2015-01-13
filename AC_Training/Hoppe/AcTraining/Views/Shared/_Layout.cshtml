@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        @RenderBody()    <!-- Content aus dem View z.B. Index.cshmt -->
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
@@ -36,6 +36,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false) 
+    @RenderSection("footer", required: false)
+    
+
+
 </body>
 </html>
