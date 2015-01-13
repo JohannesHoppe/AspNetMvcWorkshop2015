@@ -12,9 +12,9 @@ namespace AcTraining.Controllers
     public class CustomersController : ApiController
     {
         //private readonly DataContext db;
-        private readonly Models.CustomerRepository _custRep;
+        private readonly Models.ICustomerRepository _custRep;
 
-        public CustomersController(CustomerRepository customerRep)
+        public CustomersController(ICustomerRepository customerRep)
         {
             _custRep = customerRep;
         }      
