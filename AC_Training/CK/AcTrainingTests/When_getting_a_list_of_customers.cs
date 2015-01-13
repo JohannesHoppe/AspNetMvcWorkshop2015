@@ -16,7 +16,7 @@ namespace AcTrainingTests
     
     public class SetupDb
     {
-        static CustomerRepository repository;
+        public static CustomerRepository repository;
 
         public static Establish SetupDatabase(int amountOfUser)
         {
