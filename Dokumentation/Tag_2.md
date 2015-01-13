@@ -8,6 +8,10 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 2. [Action Filter (MVC)](#filter)
 2. [OData](#odata)
 
+## Aufgabe
+
+##1. Schreibt einen Test, der beweist das CustomerRepository.GetCustomer(3) auch tatsächlich den Kunden Nr. 3 zurück gibt!
+
 
 <a name="mspec"></a>
 ## 1. Ein einfacher Test mit MSpec

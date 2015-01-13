@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Net;
-using System.Web;
-using System.Web.Http.ModelBinding;
 
 namespace AcTraining.Models
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private DataContext _dataContext;
+        private readonly DataContext _dataContext;
 
         public CustomerRepository(DataContext dataContext)
         {

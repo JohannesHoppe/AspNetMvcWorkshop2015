@@ -38,7 +38,7 @@ namespace AcTraining.Controllers
 		[ResponseType(typeof(void))]
 		public IHttpActionResult PutCustomer(int id, Customer customer)
 		{
-			if (!ModelState.IsValid)
+			if (!ModelState.IsValid)		// e.g. for data annotation [Required] bzw. [MaxLength] in Customer.cs
 			{
 				return BadRequest(ModelState);
 			}
