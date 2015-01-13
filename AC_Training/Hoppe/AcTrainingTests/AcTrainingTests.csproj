@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="When_getting_an_existing_customer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

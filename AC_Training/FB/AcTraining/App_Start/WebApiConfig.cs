@@ -19,6 +19,12 @@ namespace AcTraining
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+                name: "ApiGetCustomerLastName",
+                routeTemplate: "api/{controller}/{lastname}",
+                defaults: new { lastname = RouteParameter.Optional }
+            );
         }
     }
 }
