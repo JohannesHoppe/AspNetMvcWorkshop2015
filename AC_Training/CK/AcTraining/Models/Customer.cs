@@ -8,7 +8,7 @@ namespace AcTraining.Models
         public int Id { get; set; }
         
         [Required]
-        [MaxLength(20, ErrorMessage = "Text!")]
+        [MaxLength(100, ErrorMessage = "Text!")]
         public string FirstName { get; set; }
 
 
