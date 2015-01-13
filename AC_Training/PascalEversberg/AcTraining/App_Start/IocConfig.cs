@@ -28,13 +28,22 @@ namespace AcTraining.App_Start
             // All other types to register
             DbConnection connection = Effort.DbConnectionFactory.CreatePersistent("AcTraining");
 
+            // die Reihenfolge der folgenden Zeilen ist aufgrund ihrer Abhängigkeiten empfehlenswert
+            //tatsächliches singuläres Objekt
             builder.RegisterInstance(connection)
                 .SingleInstance();
 
+            //"Bauanleitung" für jede Instanz
             builder.RegisterType<DataContext>()
                 .InstancePerRequest();
 
+            //"Bauanleitung" für jede Instanz vor Refactoring
+            /*builder.RegisterType<CustomerRepository>()
+                .InstancePerRequest();*/
+
+            //"Bauanleitung" für jede Instanz nach Refactoring => "Wenn jemand nach ICustomerRep fragt, dann gib ihm ein CustomerRep"
             builder.RegisterType<CustomerRepository>()
+                .As<ICustomerRepository>()
                 .InstancePerRequest();
 
             // register own types here!!!
