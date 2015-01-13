@@ -3,24 +3,19 @@
 <div class="jumbotron">
     <h1>@ViewBag.Title</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    
+    @Html.ActionLink("Gehe zu Test", "Test", "Home", new { @class="btn btn-primary btn-lg" }) 
 </div> 
 
-@Html.ActionLink("Gehe zu Test", "Test", "Home")  
+ 
 
-<img src="https://placekitten.com/g/500/200" />
+<img src="~/api/Catty" />
 
-@Html.Partial("Test", new Customer())  
 
-@section scripts
-{
-    <script>
-        $("h1").css("color", "red");
-    </script>
-}
-     
+    
 @section footer
 {
-   <h1 style="color:greenyellow">Hello: @ViewBag.CurrentUserName</h1>
+    <b>Username: @ViewBag.CurrentUserName</b><br/> 
+    <a href="/odata/$metadata">/odata/$metadata</a>
 }
   
