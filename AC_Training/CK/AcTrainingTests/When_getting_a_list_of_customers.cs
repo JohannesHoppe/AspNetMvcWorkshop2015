@@ -13,32 +13,34 @@ using NMemory.Linq.Helpers;
 namespace AcTrainingTests
 {
 
-    /*--
-    public class SetupDatabase( int amountOfUser)
+    
+    public class SetupDb
     {
         static CustomerRepository repository;
 
-        
-        return () =>
+        public static Establish SetupDatabase(int amountOfUser)
         {
-        
-        DbConnection connection = Effort.DbConnectionFactory.CreateTransient();
-        DataContext context = new DataContext(connection);
-
-        foreach (int i=1; i<=amountOfUser; i++)
+            return () =>
             {
-                Customer c = new Customer {FirstName = ("First" + i.ToString()) };
-                context.Customers.Add(c);
-                
-            }
-            context.SaveChanges();
 
-            repository = new CustomerRepository(context);
-        };
+                DbConnection connection = Effort.DbConnectionFactory.CreateTransient();
+                DataContext context = new DataContext(connection);
+
+                for (int i=1; i <= amountOfUser; i++)
+                {
+                    Customer c = new Customer {FirstName = ("First" + i.ToString())};
+                    context.Customers.Add(c);
+
+                }
+                context.SaveChanges();
+
+                repository = new CustomerRepository(context);
+            };
+        }
     }
     
     [Subject(typeof(CustomerRepository))]
-    public class When_getting_a_list_of_customers
+    public class When_getting_a_list_of_customers : SetupDb
     {
         private static IQueryable<Customer> result;
 
@@ -75,5 +77,5 @@ namespace AcTrainingTests
         private It should_return_Only_customer3 = () => result.Should().Be(c3);
 
     }
-    --*/
+
 }
