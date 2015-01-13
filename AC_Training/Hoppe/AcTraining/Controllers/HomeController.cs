@@ -4,7 +4,7 @@ using AcTraining.Models;
 
 namespace AcTraining.Controllers
 {
-    //[RequestTimingFilter]
+
     public class HomeController : Controller
     {
         private readonly ICustomerRepository rep; 
@@ -14,7 +14,8 @@ namespace AcTraining.Controllers
             this.rep = rep;
             this.rep.CreateCustomer(new Customer {FirstName = DateTime.Now.ToLongTimeString()});
         }
-
+        
+        [RequestTimingFilter]
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
