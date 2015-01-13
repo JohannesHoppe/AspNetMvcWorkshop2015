@@ -11,27 +11,27 @@ namespace AcTraining.Controllers
 {
     public class CustomersController : ApiController
     {
-        private readonly CustomerRepository rep;
+        private readonly ICustomerRepository _rep;
 
-        public CustomersController(CustomerRepository rep)
+        public CustomersController(ICustomerRepository rep)
         {
-            this.rep = rep;
+            this._rep = rep;
         }      
 
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()
         {
-            return rep.GetCustomers();
+            return _rep.GetCustomers();
         }
 
         // GET: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult GetCustomer(int id)
         {
-            Customer customer = rep.GetCustomer(id);
+            Customer customer = _rep.GetCustomer(id);
             if (customer == null)
             {
-                return NotFound();
+                return NotFound(); // darf nicht aus dem Repository kommen
             }
 
             return Ok(customer);
@@ -46,12 +46,27 @@ namespace AcTraining.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != customer.Id)
+            try
             {
-                return BadRequest();
-            }
+                int result = _rep.UpdateCustomer(id, customer);
+                if (result == -1)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            rep.UpdateCustomer(id, customer);
+                if (result == -2)
+                {
+                    return BadRequest();
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (_rep.CustomerExists(id))
+                {
+                    return NotFound();
+                }
+                throw;
+            }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -60,20 +75,26 @@ namespace AcTraining.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult PostCustomer(Customer customer)
         {
-            var newCustomer = rep.CreateCustomer(customer);
-            if (newCustomer == null)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = newCustomer.Id }, newCustomer);
+            if (_rep.CreateCustomer(customer) == 1)
+            {
+                return CreatedAtRoute("DefaultApi", new {id = customer.Id}, customer);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         // DELETE: api/Customers/5
         [ResponseType(typeof(Customer))]
         public IHttpActionResult DeleteCustomer(int id)
         {
-            Customer cust = rep.DeleteCustomer(id);
+            Customer cust = _rep.DeleteCustomer(id);
 
             if (cust == null)
             {
