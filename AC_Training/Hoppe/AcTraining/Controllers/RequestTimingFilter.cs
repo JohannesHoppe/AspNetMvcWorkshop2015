@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Web;
 using System.Web.Mvc;
 
 namespace AcTraining.Controllers
@@ -37,6 +38,8 @@ namespace AcTraining.Controllers
         public void OnActionExecuted(ActionExecutedContext filterContext)
         {
             GetTimer(filterContext, "action").Stop();
+
+            filterContext.Controller.ViewBag.CurrentUserName = HttpContext.Current.User.Identity.Name;
         }
 
         /// <summary>
@@ -44,7 +47,7 @@ namespace AcTraining.Controllers
         /// </summary>
         /// <param name = "filterContext">The filter context.</param>
         public void OnResultExecuting(ResultExecutingContext filterContext)
-        {
+        {          
             GetTimer(filterContext, "render").Start();
         }
 
