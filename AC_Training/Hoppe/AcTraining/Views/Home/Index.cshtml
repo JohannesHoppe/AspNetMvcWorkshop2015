@@ -7,11 +7,11 @@
     @Html.ActionLink("Gehe zu Test", "Test", "Home", new { @class="btn btn-primary btn-lg" }) 
 </div> 
 
- 
+<img src="~/api/Catty" style="display:block;" />
 
-<img src="~/api/Catty" />
+<br/>
 
-
+<a href="/odata/Customers?$top=5&$skip=2" class="btn btn-warning">Beispiel Paging mit $top=5&$skip=2</a>
     
 @section footer
 {

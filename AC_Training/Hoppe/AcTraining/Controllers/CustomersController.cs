@@ -16,8 +16,7 @@ namespace AcTraining.Controllers
             _customerRep = customerRep;
         }      
 
-        // GET: api/Customers
-
+        [EnableQuery]
         public IQueryable<Customer> GetCustomers()
         {
             return _customerRep.GetCustomers();
