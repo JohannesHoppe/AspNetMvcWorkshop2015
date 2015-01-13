@@ -35,6 +35,15 @@ namespace AcTraining.Controllers
             return Ok(customer);
         }
 
+        [Route("api/Customers/{id}/MoveToArchive")]
+        [HttpGet]
+        public void MoveToArchive(int id)
+        {
+            var c = _customerRep.GetCustomer(id);
+            c.LastName = "Archived";
+            _customerRep.UpdateCustomer(c);
+        }
+
         // PUT: api/Customers/5
         [ResponseType(typeof(void))]
         public IHttpActionResult PutCustomer(Customer customer)
