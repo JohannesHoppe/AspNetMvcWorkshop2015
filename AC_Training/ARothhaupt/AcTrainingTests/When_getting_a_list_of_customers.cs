@@ -14,10 +14,11 @@ namespace AcTrainingTests
     public class When_getting_a_list_of_customers
     {
         private static CustomerRepository repository;
-        private static IQueryable<Customer> result; 
+        private static IQueryable<Customer> result;
 
         private Establish context = () =>
         {
+            //  Arranage DB --
             DbConnection connection = Effort.DbConnectionFactory.CreateTransient();
             DataContext context = new DataContext(connection);
 
@@ -26,12 +27,13 @@ namespace AcTrainingTests
 
             context.Customers.Add(customer1);
             context.Customers.Add(customer2);
-
             context.SaveChanges();
 
-            //Arrange repository
+            //  Arranage respository--
             repository = new CustomerRepository(context);
+
         };
+
 
         Because of = () => result = repository.GetCustomers();
 

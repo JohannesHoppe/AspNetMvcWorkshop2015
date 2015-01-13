@@ -11,21 +11,23 @@ using Machine.Specifications;
 namespace AcTrainingTests
 {
     [Subject(typeof(CustomerRepository))]
-    public class When_getting_a_list_of_customers
+    public class When_getting_customer_3
     {
         private static CustomerRepository repository;
-        private static IQueryable<Customer> result; 
+        private static Customer customer;
 
         private Establish context = () =>
         {
             DbConnection connection = Effort.DbConnectionFactory.CreateTransient();
             DataContext context = new DataContext(connection);
 
-            Customer customer1 = new Customer {FirstName = "Test1"};
-            Customer customer2 = new Customer {FirstName = "Test2"};
+            Customer customer1 = new Customer { FirstName = "Test1" };
+            Customer customer2 = new Customer { FirstName = "Test2" };
+            Customer customer3 = new Customer { FirstName = "Test3" };
 
             context.Customers.Add(customer1);
             context.Customers.Add(customer2);
+            context.Customers.Add(customer3);
 
             context.SaveChanges();
 
@@ -33,9 +35,9 @@ namespace AcTrainingTests
             repository = new CustomerRepository(context);
         };
 
-        Because of = () => result = repository.GetCustomers();
+        Because of = () => customer = repository.GetCustomer(3);
 
-        It should_return_all_customers_without_any_filtering = () =>
-            result.Should().HaveCount(2);
+        private It should_return_customer_with_id_3 = () =>
+            customer.FirstName.Should().Be("Test3");
     }
 }

@@ -5,10 +5,11 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Description;
 
 namespace AcTraining.Models
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly DataContext db;
 
@@ -27,26 +28,33 @@ namespace AcTraining.Models
             return db.Customers.Find(index);
         }
 
-        public bool UpdateCustomer(int index, Customer cust)
+        public int UpdateCustomer(int index, Customer cust)
         {
+
+            if (index != cust.Id)
+            {
+                return -1;
+            }
+
             db.Entry(cust).State = EntityState.Modified;
 
             try
             {
                 db.SaveChanges();
-                return true;
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!CustomerExists(index))
                 {
-                    return false;
+                    return -2;
                 }
                 throw;
             }
+
+            return 1;
         }
 
-        public Customer CreateCustomer(Customer cust)
+        /*public Customer CreateCustomer(Customer cust)
         {
             Customer newCustomer;
             try
@@ -60,25 +68,33 @@ namespace AcTraining.Models
                 return null;
             }
             
+        }*/
+
+        // POST: api/Customers
+        [ResponseType(typeof(Customer))]
+        public int CreateCustomer(Customer customer)
+        {
+            db.Customers.Add(customer);
+            db.SaveChanges();
+
+            return 1;
         }
 
         public Customer DeleteCustomer(int index)
         {
             Customer cust = db.Customers.Find(index);
-            try
+
+            if (cust == null)
             {
-                db.Customers.Remove(cust);
-                db.SaveChanges();
-                return cust;
-            }
-            catch (Exception)
-            {
-                return cust;
+                return null;
             }
 
+            db.Customers.Remove(cust);
+            db.SaveChanges();
+            return cust;
         }
 
-        private bool CustomerExists(int id)
+        public bool CustomerExists(int id)
         {
             return db.Customers.Count(e => e.Id == id) > 0;
         }
