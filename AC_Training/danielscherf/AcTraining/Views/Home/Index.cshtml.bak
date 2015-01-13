@@ -9,10 +9,13 @@
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-@Html.Partial("Test", new Customer {FirstName = "Daniel", LastName = "Scherf", Mail = DateTime.Now.ToShortTimeString()})
+@*@Html.Partial("Test", new Customer {FirstName = "Daniel", LastName = "Scherf", Mail = DateTime.Now.ToShortTimeString()})*@
 
 
 @Html.ActionLink("Gehe zu Test", "Test", "Home");
+
+@Html.Partial("Test", new Customer() )
+
 
 @section footer
 {
