@@ -9,7 +9,7 @@ using System.Web.Http.ModelBinding;
 
 namespace AcTraining.Models
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private DataContext _dataContext;
 
