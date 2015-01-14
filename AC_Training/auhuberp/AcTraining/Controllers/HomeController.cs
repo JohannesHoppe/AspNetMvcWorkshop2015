@@ -15,7 +15,7 @@ namespace AcTraining.Controllers
 		{
 			this.rep = rep;
 			//this.rep.CreateCustomer(new Customer(){FirstName = "Test"});
-			this.rep.CreateCustomer(new Customer() { FirstName = DateTime.Now.ToLongDateString() });
+			//this.rep.CreateCustomer(new Customer() { FirstName = DateTime.Now.ToLongDateString() });
 		}
 
 		public ActionResult Index()
