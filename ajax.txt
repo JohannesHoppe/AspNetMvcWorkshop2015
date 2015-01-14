@@ -1,3 +1,0 @@
-$.post("api/Customers",  { "FirstName": "Test" } );
-
-$.get("api/Customers").success(function(data) { console.log(data) });
