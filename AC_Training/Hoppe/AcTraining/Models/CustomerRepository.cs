@@ -20,7 +20,8 @@ namespace AcTraining.Models
 
         public IQueryable<Customer> GetCustomers()
         {
-            return _dataContext.Customers;
+            //return _dataContext.Customers;
+            return _dataContext.Customers.ToList().AsQueryable();
         }
 
         public void UpdateCustomer(Customer pCustomer)
