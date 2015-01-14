@@ -18,10 +18,16 @@ namespace AcTraining.Models
 			this._db = data;
 		}
 
-		public DbSet<Customer> GetCustomers()
+		//public DbSet<Customer> GetCustomers()
+		//{
+		//	return _db.Customers;
+		//}
+		public IQueryable<Customer> GetCustomers()
 		{
-			return _db.Customers;
+			//return _db.Customers;
+			return _db.Customers.ToList().AsQueryable();
 		}
+
 
 		public Customer GetCustomer(int id)
 		{
