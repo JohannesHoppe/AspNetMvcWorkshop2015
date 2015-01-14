@@ -20,6 +20,7 @@ namespace AcTraining.Controllers
         }      
 
         // GET: api/Customers
+        [EnableQuery] //ermöglicht "WHERE"-Bedingungen im Browser
         public IQueryable<Customer> GetCustomers()
         {
             return _rep.GetCustomers();
