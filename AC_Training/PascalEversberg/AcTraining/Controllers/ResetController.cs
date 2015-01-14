@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using AcTraining.Models;
 using AutoPoco;
@@ -31,8 +32,16 @@ namespace AcTraining.Controllers
             db.Customers.AddRange(demoData);
 
             db.SaveChanges();
+            //mit den folgenden Zeilen versucht der IE nicht mehr, json-Dokumente zu öffnen, wenn auf den Reset-Button geklickt wird
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("Demo Data was resetted!")
+            };
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Demo Data was resetted!");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+
+            //return Request.CreateResponse(HttpStatusCode.OK, "Demo Data was resetted!");
+            return response;
         }
 
         private static IEnumerable<Customer> GenerateDemoCustomers()
