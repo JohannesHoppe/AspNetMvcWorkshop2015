@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace AcTraining.Models
 {
@@ -10,5 +12,8 @@ namespace AcTraining.Models
         public string Mail { get; set; }
         public string Phone { get; set; }
         //public DateTime DateOfBirth { get; set; }
+
+        public int AmountOfOrders { get; set; }
+        public int AmountOfInvoices { get; set; }
     }
 }
