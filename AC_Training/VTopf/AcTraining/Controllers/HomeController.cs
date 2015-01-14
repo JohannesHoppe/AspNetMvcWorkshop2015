@@ -14,7 +14,7 @@ namespace AcTraining.Controllers
         public HomeController(ICustomerRepository rep)
         {
             this.rep = rep;
-            this.rep.CreateCustomer(new Customer {FirstName = "Verena", LastName = DateTime.Now.ToLongTimeString()});
+            //this.rep.CreateCustomer(new Customer {FirstName = "Verena", LastName = DateTime.Now.ToLongTimeString()});
         }
 
         public ActionResult Index()
