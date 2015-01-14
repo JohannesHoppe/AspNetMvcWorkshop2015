@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using AcTraining.Models;
 using AutoPoco;
@@ -32,7 +33,10 @@ namespace AcTraining.Controllers
 
             db.SaveChanges();
 
-            var response = new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("Demo Data was resetted!") };
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+                           {
+                               Content = new StringContent("Demo Data was resetted!")
+                           };
             response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
             return response;
         }
