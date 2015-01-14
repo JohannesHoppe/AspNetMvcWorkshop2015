@@ -17,6 +17,7 @@ namespace AcTraining.Controllers
             _customerRepository = customerRepository;
         }
 
+        [EnableQuery]
         public IEnumerable<Customer> GetCustomers()
         {
             return _customerRepository.GetCustomers();

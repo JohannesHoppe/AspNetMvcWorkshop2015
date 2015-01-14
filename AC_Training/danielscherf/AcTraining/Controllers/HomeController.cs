@@ -15,7 +15,7 @@ namespace AcTraining.Controllers
         public HomeController(ICustomerRepository repository)
         {
             _repository = repository;
-            _repository.Insert(new Customer {FirstName = "Daniel", LastName = "Scherf", Mail = DateTime.Now.ToShortTimeString()});
+            //_repository.Insert(new Customer {FirstName = "Daniel", LastName = "Scherf", Mail = DateTime.Now.ToShortTimeString()});
         }
 
         public ActionResult Index()
