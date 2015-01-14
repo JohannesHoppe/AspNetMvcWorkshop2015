@@ -21,7 +21,8 @@ namespace AcTraining.Models
         // GET: SELECT ALL
         public IQueryable<Customer> GetCustomers()
         {
-            return db.Customers;
+            //return db.Customers;
+            return db.Customers.ToList().AsQueryable();
         }
 
         // GET: SELECT WHERE ID
