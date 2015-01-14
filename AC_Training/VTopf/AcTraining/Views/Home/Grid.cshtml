@@ -1,5 +1,7 @@
 ﻿
-
+<div class="demo-section k-content">
+        <div id="chart"></div>
+    </div>
 <div id="grid"></div>
 
 <input id="datetimepicker"/>
@@ -37,6 +39,46 @@
                     serverSorting: true
                 });
 
+            function createChart() {
+               
+            $("#chart").kendoChart({
+                title: {
+                    text: "Amount of Orders and Invoices"
+                },
+                legend: {
+                    position: "bottom"
+                },
+                seriesDefaults: {
+                    type: "line"
+                },
+                dataSource: dataSource,
+                series: [{
+                    field: "AmountOfOrders",
+                    name: "Amount ofOrders"
+                }, {
+                    field: "AmountOfInvoices",
+                    name: "Amount of Invoices"
+                }],
+                categoryAxis: {
+                    field: "FirstName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    field: "AmountOfOrders",
+                    labels: {
+                        format: "N0"
+                    }
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
 
             $("#grid").kendoGrid({
                 dataSource: dataSource,
