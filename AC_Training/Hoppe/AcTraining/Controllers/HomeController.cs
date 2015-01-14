@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using AcTraining.Models;
 
 namespace AcTraining.Controllers
@@ -22,11 +21,6 @@ namespace AcTraining.Controllers
         }
 
         public ActionResult Grid()
-        {
-            return View();
-        }
-
-        public ActionResult Chart()
         {
             return View();
         }
