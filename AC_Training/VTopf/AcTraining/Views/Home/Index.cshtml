@@ -14,7 +14,12 @@
     <h1>@Model</h1>
 }
 
-@Html.ActionLink("Gehe zu Test", "Test", "Home")
+@Html.ActionLink("Gehe zu Test", "Test", "Home", new {@class="btn btn-primary btn-lg "})
+@Html.ActionLink("Reset Data", "Reset", "api", null, new {@class="btn btn-warning btn-lg "})
+
+<a href="/odata/Customers?$top=5&$skip=2" class="btn btn-primary btn-lg">List Top 5 Customers</a>
+
+<a href="/odata/Customers?$top=5&$skip=2&$inlinecount=allpages" class="btn btn-primary btn-lg">List Customers</a>
 
 @Html.Partial("Test", new Customer {FirstName = "Verena", LastName = DateTime.Now.ToLongTimeString()})
 
