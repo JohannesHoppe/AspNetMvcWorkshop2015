@@ -34,5 +34,10 @@ namespace AcTraining.Controllers
         {
             return "<html><h1>Test</h1></html>";
         }
+
+        public ActionResult Grid()
+        {
+            return View();
+        }
     }
 }

@@ -33,5 +33,11 @@ namespace AcTraining.Controllers
 
             return View(customer);
         }
+       
+        public ActionResult Grid()
+        {
+
+            return View();
+        }
     }
 }
