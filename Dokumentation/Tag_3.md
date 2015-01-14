@@ -160,6 +160,7 @@ var dataSource = new kendo.data.DataSource({
 
 1. Fügen Sie Kendo UI per Nuget zum Projekt hinzu
 2. Implementieren Sie ein Grid mit Kendo UI
+3. Pimpt das grid mit einer Filter Row!
 3. Implementieren Sie ein Chart mit Kendo UI
 
 

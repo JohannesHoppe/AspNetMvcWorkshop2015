@@ -12,7 +12,7 @@ namespace AcTraining.Controllers
         public HomeController(ICustomerRepository rep)
         {
             this.rep = rep;
-            this.rep.CreateCustomer(new Customer {FirstName = DateTime.Now.ToLongTimeString()});
+            //this.rep.CreateCustomer(new Customer {FirstName = DateTime.Now.ToLongTimeString()});
         }
         
 
@@ -33,6 +33,11 @@ namespace AcTraining.Controllers
         public string Test2()
         {
             return "<html><h1>Test</h1></html>";
+        }
+
+        public ActionResult Grid()
+        {
+            return View();
         }
     }
 }
