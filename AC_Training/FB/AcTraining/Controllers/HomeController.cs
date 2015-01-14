@@ -32,5 +32,10 @@ namespace AcTraining.Controllers
                 customer = new Customer { FirstName = "Urs", LastName = "Murpf", Mail = DateTime.Now.ToShortDateString() };
             return View(customer);
         }
+
+        public ActionResult Grid()
+        {
+            return View();
+        }
     }
 }

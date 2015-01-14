@@ -27,7 +27,7 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <p>@RenderBody()</p>
         <hr />
         <footer>
             @RenderSection("footer",required: false)
@@ -39,5 +39,6 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @*@RenderSection("footer",required: false)*@
+
 </body>
 </html>

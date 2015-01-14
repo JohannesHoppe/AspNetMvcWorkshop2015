@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using AcTraining.Models;
 using AutoPoco;
@@ -31,8 +32,14 @@ namespace AcTraining.Controllers
             db.Customers.AddRange(demoData);
 
             db.SaveChanges();
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("Demo data was restted!")
+            };
+            response.Content.Headers.ContentType= new MediaTypeHeaderValue("text/plain");
+            return response;
 
-            return Request.CreateResponse(HttpStatusCode.OK, "Demo Data was resetted!");
+            //return Request.CreateResponse(HttpStatusCode.OK, "Demo Data was resetted!");
         }
 
         private static IEnumerable<Customer> GenerateDemoCustomers()
