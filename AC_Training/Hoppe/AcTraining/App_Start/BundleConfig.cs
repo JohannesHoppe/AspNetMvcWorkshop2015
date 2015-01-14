@@ -23,7 +23,7 @@ namespace AcTraining
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css",
+                      "~/Content/site.css",      
                       "~/Content/kendo/2014.2.716/kendo.common-bootstrap.min.css",
                       "~/Content/kendo/2014.2.716/kendo.bootstrap.min.css"));
         }

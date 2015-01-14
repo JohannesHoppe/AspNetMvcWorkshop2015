@@ -12,9 +12,7 @@ namespace AcTraining.Controllers
         public HomeController(ICustomerRepository rep)
         {
             this.rep = rep;
-            //this.rep.CreateCustomer(new Customer {FirstName = DateTime.Now.ToLongTimeString()});
         }
-        
 
         public ActionResult Index()
         {
@@ -23,19 +21,12 @@ namespace AcTraining.Controllers
             return View(model: "Text");
         }
 
-        public ActionResult Test()
-        {
-            var customer = rep.GetCustomer(1);
-
-            return View(customer);
-        }
-
-        public string Test2()
-        {
-            return "<html><h1>Test</h1></html>";
-        }
-
         public ActionResult Grid()
+        {
+            return View();
+        }
+
+        public ActionResult Chart()
         {
             return View();
         }
