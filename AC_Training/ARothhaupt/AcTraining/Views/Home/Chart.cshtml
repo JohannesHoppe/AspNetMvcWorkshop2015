@@ -1,0 +1,82 @@
+﻿
+
+<div id="chart"></div>
+
+ @section scripts {
+     <script>
+         $(document).ready(function() {
+             var dataSource = new kendo.data.DataSource({
+                 type: "odata",
+                 transport: {
+                     read: {
+                         type: 'GET',
+                         url: '/odata/Customers',
+                         dataType: 'json'
+                     }
+                 },
+                 schema: {
+                     data: function (data) {return data.value;},
+                     total: function (data) {return data['odata.count'];},
+                     model: {
+                         id: 'Id',
+                         fields: {
+                             Id: { type: "number" },
+                             FirstName: { type: "string" },
+                             LastName: { type: "string" },
+                             Mail: { type: "string" },
+                             AmountOfOrders: { type: "number" },
+                             AmountOfInvoices: { type: "number" }
+                         }
+                     }
+                 },
+                 pageSize: 50,
+                 serverPaging: true,
+                 serverFiltering: true,
+                 serverSorting: true
+
+             });
+
+             $("#chart").kendoChart({
+                 dataSource: dataSource,
+                 title: {
+                     text: "Number of Orders/Invoices)"
+                 },
+                 legend: {
+                     position: "top"
+                 },
+                 seriesDefaults: {
+                     type: "line"
+                 },
+                 series: [{
+                     field: "AmountOfOrders",
+                     name: "AmountOfOrders"
+                 }, {
+                     field: "AmountOfInvoices",
+                     name: "AmountOfInvoices"
+                 }],
+                 categoryAxis: {
+                     field: "LastName",
+                 labels: {
+                     rotation: -90
+                 },
+                 crosshair: {
+                     visible: true
+                 }
+             },
+             valueAxis: {
+                 labels: {
+                         format: "N0"
+                 },
+                 majorUnit: 100
+             },
+             tooltip: {
+                 visible: true,
+                 shared: true,
+                 format: "N0"
+             }
+                 
+             });
+         });
+     </script>
+
+ }

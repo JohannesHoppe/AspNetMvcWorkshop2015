@@ -37,5 +37,10 @@ namespace AcTraining.Controllers
             return View();
         }
 
+        public ActionResult Chart()
+        {
+            return View();
+        }
+
     }
 }

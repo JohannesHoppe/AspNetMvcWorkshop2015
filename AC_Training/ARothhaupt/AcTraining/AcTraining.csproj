@@ -598,6 +598,7 @@
     <Content Include="Scripts\kendo\2014.2.716\kendo.all.min.js.map" />
     <Content Include="Scripts\kendo\2014.2.716\jquery.min.map" />
     <Content Include="Views\Home\Grid.cshtml" />
+    <Content Include="Views\Home\Chart.cshtml" />
     <None Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
