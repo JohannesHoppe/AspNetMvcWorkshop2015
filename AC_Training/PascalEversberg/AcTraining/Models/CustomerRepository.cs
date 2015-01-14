@@ -11,21 +11,23 @@ namespace AcTraining.Models
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly DataContext db;
+        private readonly DataContext _dataContext;
 
-        public CustomerRepository(DataContext db)
+        public CustomerRepository(DataContext dataContext)
         {
-            this.db = db;
+            this._dataContext = dataContext;
         }
 
         public IQueryable<Customer> GetCustomers()
         {
-            return db.Customers;
+            //return _dataContext.Customers;
+            return _dataContext.Customers.ToList().AsQueryable(); //nie in echt machen!
+            //ToList().AsQueryable() => passiert im Arbeitsspeicher => bei vielen Datensätzen schlecht
         }
 
         public Customer GetCustomer(int index)
         {
-            return db.Customers.Find(index);
+            return _dataContext.Customers.Find(index);
         }
 
         public int UpdateCustomer(int index, Customer cust)
@@ -36,11 +38,11 @@ namespace AcTraining.Models
                 return -1;
             }
 
-            db.Entry(cust).State = EntityState.Modified;
+            _dataContext.Entry(cust).State = EntityState.Modified;
 
             try
             {
-                db.SaveChanges();
+                _dataContext.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -59,8 +61,8 @@ namespace AcTraining.Models
             Customer newCustomer;
             try
             {
-                newCustomer = db.Customers.Add(cust);
-                db.SaveChanges();
+                newCustomer = _dataContext.Customers.Add(cust);
+                _dataContext.SaveChanges();
                 return newCustomer;
             }
             catch(Exception)
@@ -74,29 +76,29 @@ namespace AcTraining.Models
         [ResponseType(typeof(Customer))]
         public int CreateCustomer(Customer customer)
         {
-            db.Customers.Add(customer);
-            db.SaveChanges();
+            _dataContext.Customers.Add(customer);
+            _dataContext.SaveChanges();
 
             return 1;
         }
 
         public Customer DeleteCustomer(int index)
         {
-            Customer cust = db.Customers.Find(index);
+            Customer cust = _dataContext.Customers.Find(index);
 
             if (cust == null)
             {
                 return null;
             }
 
-            db.Customers.Remove(cust);
-            db.SaveChanges();
+            _dataContext.Customers.Remove(cust);
+            _dataContext.SaveChanges();
             return cust;
         }
 
         public bool CustomerExists(int id)
         {
-            return db.Customers.Count(e => e.Id == id) > 0;
+            return _dataContext.Customers.Count(e => e.Id == id) > 0;
         }
 
     }

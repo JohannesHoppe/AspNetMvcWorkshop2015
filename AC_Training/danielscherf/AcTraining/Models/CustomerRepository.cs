@@ -19,9 +19,9 @@ namespace AcTraining.Models
         }
 
         // GET: api/Customers
-        public IEnumerable<Customer> GetCustomers()
+        public IQueryable<Customer> GetCustomers()
         {
-            return _db.Customers.ToList();
+            return _db.Customers.ToList().AsQueryable();
         }
 
         // GET: api/Customers/5
