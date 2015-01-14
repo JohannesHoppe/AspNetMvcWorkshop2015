@@ -9,7 +9,7 @@ using System.Web.Http.Description;
 
 namespace AcTraining.Models
 {
-    public class CustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly DataContext db;
 

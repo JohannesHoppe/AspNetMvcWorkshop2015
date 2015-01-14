@@ -5,17 +5,18 @@ using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.OData;
 using AcTraining.Models;
 
 namespace AcTraining.Controllers
 {
-    public class CustomersController : ApiController
+    public class CustomersController : ODataController//ApiController
     {
-        private readonly CustomerRepository cr;
+        private readonly ICustomerRepository cr;
 
-        public CustomersController(DataContext db)
+        public CustomersController(ICustomerRepository custRep)
         {
-            this.cr = new CustomerRepository(db);
+            this.cr = custRep;
         }      
 
         // GET: api/Customers
