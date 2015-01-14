@@ -3,16 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AcTraining.Models;
 
 namespace AcTraining.Controllers
 {
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {
-            ViewBag.Title = "Home Page";
+	public class HomeController : Controller
+	{
+		private readonly ICustomerRepository rep;
 
-            return View();
-        }
-    }
+		public HomeController(ICustomerRepository rep)
+		{
+			this.rep = rep;
+			//this.rep.CreateCustomer(new Customer(){FirstName = "Test"});
+			//this.rep.CreateCustomer(new Customer() { FirstName = DateTime.Now.ToLongDateString() });
+		}
+
+		public ActionResult Index()
+		{
+			ViewBag.Title = "Home Page";
+
+			return View(model: "TestText");
+		}
+		public ActionResult Test()
+		{
+			var customer = rep.GetCustomer(1);
+			return View(customer);
+
+		}
+	}
 }

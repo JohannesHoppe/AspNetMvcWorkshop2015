@@ -1,10 +1,11 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 
 namespace AcTraining.Models
 {
 	public interface ICustomerRepository
 	{
-		DbSet<Customer> GetCustomers();
+		IQueryable<Customer> GetCustomers();
 		Customer GetCustomer(int id);
 		CustomerRepository.UpdateRetVals UpdateCustomer(int id, Customer customer);
 		void CreateCustomer(Customer customer);

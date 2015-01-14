@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -16,13 +13,15 @@ namespace AcTraining.Controllers
 
         public CustomersController(ICustomerRepository customerRep)
         {
-            this._customerRep = customerRep;
+            _customerRep = customerRep;
         }      
 
         // GET: api/Customers
+        [EnableQuery]
         public IQueryable<Customer> GetCustomers()
         {
-            return _customerRep.GetCustomers();
+            //return _customerRep.GetCustomers();
+            return _customerRep.GetCustomers().ToList().AsQueryable();
         }
 
         // GET: api/Customers/5
