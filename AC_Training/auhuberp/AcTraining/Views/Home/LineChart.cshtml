@@ -1,0 +1,104 @@
+﻿<div id="chart"></div>
+<div id="grid"></div>
+
+@section scripts
+{
+    <script>
+
+        function createChart() {
+
+            var dataSource = new kendo.data.DataSource(
+                   {
+                       type: "odata",
+                       transport: {
+                           read: {
+                               type: 'GET',
+                               url: '/odata/Customers',
+                               dataType: 'json'
+                           }
+                       },
+                       schema: {
+                           data: function (data) { return data.value; },
+                           total: function (data) { return data['odata.count']; },
+                           model: {
+                               fields: {
+                                   Id: { type: "number" },
+                                   FirstName: { type: "string" },
+                                   LastName: { type: "string" },
+                                   Mail: { type: "string" },
+                                   AmountOfOrders: { type: "number" },
+                                   AmountOfInvoices: { type: "number" },
+                                   DateOfBirth: { type: "date" }
+                               }
+                           }
+                       },
+                       pageSize: 20,
+                       serverPaging: true,
+                       serverFiltering: true,
+                       serverSorting: true
+                   }
+               );
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height:
+                    550,
+                filterable:
+                    true,
+                sortable:
+                    true,
+                pageable:
+                    true,
+                columns:
+                [
+                    { field: "Id" },
+                    { field: "FirstName", title: "First Name" },
+                    { field: "LastName", title: "Last Name" },
+                    { field: "Mail" },
+                    { field: "DateOfBirth", format: "{0:dd.MM.yyyy hh:mm}" }
+                ]
+            });
+            $("#chart").kendoChart({
+                dataSource: dataSource,
+                title: {
+                    text: "Spain electricity production (GWh)"
+                },
+                legend: {
+                    position: "top"
+                },
+                seriesDefaults: {
+                    type: "line"
+                },
+                series: [{
+                    field: "AmountOfOrders",
+                    name: "AmountOfOrders"
+                }, {
+                    field: "AmountOfInvoices",
+                    name: "AmountOfInvoices"
+                }],
+                categoryAxis: {
+                    field: "LastName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    labels: {
+                        format: "N0"
+                    },
+                    majorUnit: 150
+                },
+                tooltip: {
+                    visible: true,
+                    shared: true,
+                    format: "N0"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+    </script>
+}
