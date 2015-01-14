@@ -1,0 +1,78 @@
+﻿
+
+<div id="grid"></div>
+
+ @section scripts {
+     <script>
+         $(document).ready(function() {
+             var dataSource = new kendo.data.DataSource({
+                 type: "odata",
+                 transport: {
+                     read: {
+                         type: 'GET',
+                         url: '/odata/Customers',
+                         dataType: 'json'
+                     }
+                 },
+                 schema: {
+                     data: function (data) {return data.value;},
+                     total: function (data) {return data['odata.count'];},
+                     model: {
+                         id: 'Id',
+                         fields: {
+                             Id: { type: "number" },
+                             FirstName: { type: "string" },
+                             LastName: { type: "string" },
+                             Mail: { type: "string" },
+                             AmountOfOrders: { type: "number" },
+                             AmountOfInvoices: { type: "number" }
+                         }
+                     }
+                 },
+                 pageSize: 20,
+                 serverPaging: true,
+                 serverFiltering: true,
+                 serverSorting: true
+
+             });
+
+             $("#grid").kendoGrid({
+                 dataSource: dataSource,
+                 height: 550,
+                 filterable:
+                 {
+                     mode : "row"
+                 },
+                 sortable: true,
+                 pageable: true,
+                 columns: [
+                     {
+                         field: "Id",
+                         filterable: false
+                     },
+                     {
+                         field: "FirstName",
+                         title: "FirstName"
+                     },
+                     {
+                         field: "LastName",
+                         title: "LastName"
+                     },
+                     {
+                         field: "Mail",
+                         title: "Mail"
+                     },
+                     {
+                         field: "AmountOfOrders",
+                         title: "AmountOfOrders"
+                     },
+                     {
+                         field: "AmountOfInvoices",
+                         title: "AmountOfInvoices"
+                     }
+                 ]
+             });
+         });
+     </script>
+
+ }
