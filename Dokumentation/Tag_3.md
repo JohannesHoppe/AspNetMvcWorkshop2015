@@ -170,6 +170,14 @@ var dataSource = new kendo.data.DataSource({
 ![JavaScript](Images/best_practices_logo.png)
 ### http://johanneshoppe.github.io/JsBestPractices/
 
+Promise:
+
+Ich verspreche dir, zu orgendeinen Zeitpunkt entweder deine "success" oder deine "error" Methode aufzurufen. (ggf. auch finally).
+
+$.get()
+  .success(function() {})
+  .error(function() {});
+
 <hr>
 
 _&copy; 2015, Johannes Hoppe_
