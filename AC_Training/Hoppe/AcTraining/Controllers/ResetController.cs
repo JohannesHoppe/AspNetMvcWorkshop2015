@@ -54,7 +54,7 @@ namespace AcTraining.Controllers
                     .Setup(c => c.FirstName).Use<FirstNameSource>()
                     .Setup(c => c.LastName).Use<LastNameSource>()
                     .Setup(c => c.Mail).Use<EmailAddressSource>()
-                    //.Setup(c => c.DateOfBirth).Use<DateOfBirthSource>()
+                    .Setup(c => c.DateOfBirth).Use<DateOfBirthSource>()
                     .Setup(c => c.AmountOfOrders).Use<IntegerSource>(1, 100)
                     .Setup(c => c.AmountOfInvoices).Use<SecondIntegerSource>(1, 100)
                     ;
