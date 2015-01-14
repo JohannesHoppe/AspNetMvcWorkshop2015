@@ -6,8 +6,9 @@
     self.customers = ko.observableArray([
         {
             Id: ko.observable(0),
-            FirstName: "Daten laden...",
-            LastName: "werden geladen..."
+            FirstName: ko.observable("Daten laden..."),
+            LastName: ko.observable("werden geladen..."),
+            DateOfBirth: ko.observable(new Date())
         }]);
 
     self.loadData = function () {

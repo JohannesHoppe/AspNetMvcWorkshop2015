@@ -42,6 +42,28 @@
                         </div>
 
                     </div>
+                    
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">DateOfBirth</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   class="datepicker"
+                                   data-bind="textInput: DateOfBirth, my_kendo_datepicker: { format: 'dd.MM.yyyy' }">
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">DateOfBirth</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                   class="datepicker"
+                                   data-bind="my_kendo_datepicker2: DateOfBirth, datepickerOptions: { format: 'dd.MM.yyyy' }">
+                        </div>
+
+                    </div>
 
                 </form>
             </div>
@@ -65,5 +87,55 @@
         var model = new CustomerViewModel();
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
+
+        ko.bindingHandlers.my_kendo_datepicker = {
+            init: function(element, valueAccessor) {
+                var options = valueAccessor() || {};
+                $(element).kendoDatePicker(options);
+            }
+        };
+
+        ko.bindingHandlers.my_kendo_datepicker2 = {
+            init: function(element, valueAccessor, allBindingsAccessor) {
+
+                //initialize datepicker with some optional options
+                var options = allBindingsAccessor().datepickerOptions || {};
+                var datepicker = $(element).kendoDatePicker(options).data('kendoDatePicker');
+
+                // populate changes from Kendo UI world to Knockout world
+                datepicker.bind("change", function() {
+
+                    var value = datepicker.value();
+                    var observable = valueAccessor();
+
+                    if (value === observable()) {
+                        return;
+                    }
+
+                    console.log("change in Kendo UI", value);
+                    observable(value);
+                });
+
+                //handle disposal (if KO removes by the template binding)
+                ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                    datepicker.destroy();
+                });
+            },
+
+            update: function (element, valueAccessor) {
+
+                //update the control when the view model changes
+                var value = ko.utils.unwrapObservable(valueAccessor());
+                var datepicker = $(element).data('kendoDatePicker');
+
+                if (value === datepicker.value()) {
+                    return;
+                }
+
+                console.log("change in Knockout", value);
+                datepicker.value(value);
+            }
+        }
+
     </script>
 }

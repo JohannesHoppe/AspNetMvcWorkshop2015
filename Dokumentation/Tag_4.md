@@ -9,6 +9,7 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
     2. [Bootstrapping Knockout](#bootstrapping)
     3. [Fetching data from the Server](#data)
     4. [Applying Bindings](#bindings)
+    5. [Custom Bindings](#custom)
 
 <a name="javascript"></a>
 ## 1. JavaScript Best Practices
@@ -118,8 +119,9 @@ var CustomerViewModel = function () {
     self.customers = ko.observableArray([
         {
             Id: ko.observable(0),
-            FirstName: "Daten laden...",
-            LastName: "werden geladen..."
+            FirstName: ko.observable("Daten laden..."),
+            LastName: ko.observable("werden geladen..."),
+            DateOfBirth: ko.observable(new Date())
         }]);
 
     self.loadData = function () {
@@ -161,6 +163,111 @@ Erforderlich:
 * `foreach`
 * `attr`
 * ggf. `textInput`
+
+
+<a name="custom"/></a>
+## 2.5. jQuery Plugins integrieren / custom bindings
+
+jQuery-Plugins werden üblicherweise in dem Zeitpunkt angewendet, wenn der DOM bereit steht, z.B. per:
+```
+$(function() {
+    $(".datepicker").kendoDatePicker();
+});
+```
+
+Zu diesem Zeitpunkt hat aber Knockout noch gar nicht das HTML gerendert. Es geschieht demnach nichts:
+![Plain](Images/ko_jquery.png)
+
+
+Auch würde jede Änderung am Observable-Array die Manipulation des jQuery-Plugins wieder verwerfen. Generell gilt: **In Knockout sollte jeder Code, der den DOM manipuliert, durch ein "[Custom Binding](http://knockoutjs.com/documentation/custom-bindings.html)" realisiert werden.** Dies gilt ebenso für jQuery-Plugins!
+
+```
+<input type="text"
+       class="datepicker"
+       data-bind="textInput: DateOfBirth,
+                  my_kendo_datepicker: { format: 'dd.MM.yyyy' }">
+
+
+<script>
+
+    ko.bindingHandlers.my_kendo_datepicker = {
+        init: function (element, valueAccessor) {
+            var options = valueAccessor() || {};
+            $(element).kendoDatePicker(options);
+        }
+    };
+
+</script>
+
+```
+Ergebnis:
+![Plain](Images/ko_jquery2.png)
+
+
+Allerdings berücksichtigt in diesem Fall das Kendo UI-Widget nicht das ViewModel von Knockout. Das heißt, es wird weder eine Änderung im ViewModel im Kendo UI-Widget angezeigt, nocht wird eine Änderung im Kendo UI-Widget zurück an das ViewModel kommuniziert. Die vollständige Integration beider Welten ist sehr aufwendig.
+
+```
+<input type="text"
+       class="datepicker"
+       data-bind="my_kendo_datepicker2: DateOfBirth,
+                  datepickerOptions: { format: 'dd.MM.yyyy' }">
+
+<script>
+
+   ko.bindingHandlers.my_kendo_datepicker2 = {
+        init: function(element, valueAccessor, allBindingsAccessor) {
+
+            //initialize datepicker with some optional options
+            var options = allBindingsAccessor().datepickerOptions || {};
+            var datepicker = $(element).kendoDatePicker(options).data('kendoDatePicker');
+
+            // populate changes from Kendo UI world to Knockout world
+            datepicker.bind("change", function() {
+
+                var value = datepicker.value();
+                var observable = valueAccessor();
+
+                if (value === observable()) {
+                    return;
+                }
+
+                console.log("change in Kendo UI", value);
+                observable(value);
+            });
+
+            //handle disposal (if KO removes by the template binding)
+            ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+                datepicker.destroy();
+            });
+        },
+
+        update: function (element, valueAccessor) {
+
+            //update the control when the view model changes
+            var value = ko.utils.unwrapObservable(valueAccessor());
+            var datepicker = $(element).data('kendoDatePicker');
+
+            if (value === datepicker.value()) {
+                return;
+            }
+
+            console.log("change in Knockout", value);
+            datepicker.value(value);
+        }
+    }
+
+</script>
+
+```
+
+Telerik hat bereits eine Sammlung von fertigen Knockout-Bindings vorbereitet:
+https://github.com/kendo-labs/knockout-kendo
+
+
+
+
+Siehe auch:
+http://www.knockmeout.net/2011/07/another-look-at-custom-bindings-for.html
 
 <hr>
 
