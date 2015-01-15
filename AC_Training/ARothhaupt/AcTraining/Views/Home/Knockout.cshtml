@@ -16,11 +16,10 @@
 
     <div data-bind="foreach: customers">
 
-        var srcString ="";
 
         <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
 
-            <img src="http://www.gravatar.com/avatar/1?d=wavatar&f=y" class="img-thumbnail pull-right"/>
+            <img data-bind="attr:{ src: $root.image($data)  }" class="img-thumbnail pull-right" />
             <div class="panel-heading" data-bind="text: FirstName"></div>
             <div class="panel-body">
 
