@@ -433,6 +433,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\CustomerViewModel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -712,11 +713,11 @@
     <Content Include="Scripts\kendo\2014.2.716\kendo.angular.min.js.map" />
     <Content Include="Scripts\kendo\2014.2.716\kendo.all.min.js.map" />
     <Content Include="Scripts\kendo\2014.2.716\jquery.min.map" />
+    <Content Include="Views\Home\Knockout.cshtml" />
     <None Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\app\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
