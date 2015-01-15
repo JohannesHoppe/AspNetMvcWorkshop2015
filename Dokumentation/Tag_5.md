@@ -45,6 +45,17 @@ namespace AcTraining
 }
 ```
 
+Danach kann das Beispiel unter
+    /SignalR.Sample/StockTicker.html
+betrachtet werden.
+
+
+![Owin Startup](Images/signalr_example.png)
+
+
+### Eigenes Beispiel
+
+
 
 <hr>
 
