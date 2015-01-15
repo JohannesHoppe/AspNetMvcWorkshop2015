@@ -31,5 +31,16 @@ namespace AcTraining.Controllers
             var customer = rep.GetCustomer(1);
             return View(customer);
         }
+
+        public ActionResult Grid()
+        {
+            return View();
+        }
+
+        public ActionResult Chart()
+        {
+            return View();
+        }
+
     }
 }

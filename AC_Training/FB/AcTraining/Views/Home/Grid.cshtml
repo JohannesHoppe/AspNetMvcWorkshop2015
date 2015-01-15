@@ -1,0 +1,120 @@
+﻿<h2>My Kendo DateTimePicker</h2>
+<p></p>
+<input id="dtPicker" />
+<p></p>
+<h2>My Kendo Grid</h2>
+<p></p>
+<div id="grid"></div>
+<h2>My Kendo Chart</h2>
+<p></p>
+<div id="chart"></div>
+
+@section scripts
+{
+    <script>
+        $("#dtPicker").kendoDateTimePicker({ value: new Date() });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var dataSource = new kendo.data.DataSource(
+                {
+                    type: "odata",
+                    transport: {
+                        read: {
+                            type: 'GET',
+                            url: '/odata/Customers',
+                            dataType: 'json'
+                        }
+                    },
+                    schema: {
+                        data: function(data) { return data.value; },
+                        total: function(data) { return data['odata.count']; },
+                        model: {
+                            id: 'Id',
+                            fields: {
+                                Id: { type: "number" },
+                                FirstName: { type: "string" },
+                                LastName: { type: "string" },
+                                Mail: { type: "string" },
+                                AmountOfOrders: { type: "number" },
+                                AmountOfInvoices: { type: "number" }
+                            }
+                        }
+                    },
+                    pageSize: 20,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true
+                });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                filterable: { mode: "row" },
+                sortable: true,
+                pageable: true,
+                columns: [{
+                        field: "Id"//,
+                    //filterable: false
+                    }, {
+                        field: "FirstName",
+                        title: "First Name"
+                    }, {
+                        field: "LastName",
+                        title: "Last Name"
+                    }, {
+                    //    field: "Mail",
+                    //    title: "E-Mail"
+                    //}, {
+                        field: "AmountOfOrders",
+                        title: "Amount of Orders"
+                    }, {
+                        field: "AmountOfInvoices",
+                        title: "Amount of Invoices"
+                        //hidden: true
+                    }
+                ]
+            });
+            
+            $("#chart").kendoChart({
+                dataSource: dataSource,
+                title: {
+                    text: "Flo77 Chart"
+                },
+                legend: {
+                    position: "top"
+                },
+                seriesDefaults: {
+                    type: "line"
+                },
+                series: [{
+                    field: "AmountOfOrders",
+                    name: "AmountOfOrders"
+                }, {
+                    field: "AmountOfInvoices",
+                    name: "AmountOfInvoices"
+                }],
+                categoryAxis: {
+                    field: "FirstName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                },
+                //valueAxis: {
+                //    labels: {
+                //        format: "N0"
+                //    },
+                //    majorUnit: 100
+                //},
+                tooltip: {
+                    visible: true,
+                    shared: true,
+                    format: "N0"
+                }
+            });
+        });
+    </script>
+}

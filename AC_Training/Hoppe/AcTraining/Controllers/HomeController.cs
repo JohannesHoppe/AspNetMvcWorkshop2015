@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using AcTraining.Models;
 
 namespace AcTraining.Controllers
@@ -12,9 +11,7 @@ namespace AcTraining.Controllers
         public HomeController(ICustomerRepository rep)
         {
             this.rep = rep;
-            this.rep.CreateCustomer(new Customer {FirstName = DateTime.Now.ToLongTimeString()});
         }
-        
 
         public ActionResult Index()
         {
@@ -23,16 +20,9 @@ namespace AcTraining.Controllers
             return View(model: "Text");
         }
 
-        public ActionResult Test()
+        public ActionResult Grid()
         {
-            var customer = rep.GetCustomer(1);
-
-            return View(customer);
-        }
-
-        public string Test2()
-        {
-            return "<html><h1>Test</h1></html>";
+            return View();
         }
     }
 }

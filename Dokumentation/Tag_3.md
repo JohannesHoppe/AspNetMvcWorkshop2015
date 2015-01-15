@@ -160,6 +160,7 @@ var dataSource = new kendo.data.DataSource({
 
 1. Fügen Sie Kendo UI per Nuget zum Projekt hinzu
 2. Implementieren Sie ein Grid mit Kendo UI
+3. Pimpt das grid mit einer Filter Row!
 3. Implementieren Sie ein Chart mit Kendo UI
 
 
@@ -168,6 +169,14 @@ var dataSource = new kendo.data.DataSource({
 
 ![JavaScript](Images/best_practices_logo.png)
 ### http://johanneshoppe.github.io/JsBestPractices/
+
+Promise:
+
+Ich verspreche dir, zu orgendeinen Zeitpunkt entweder deine "success" oder deine "error" Methode aufzurufen. (ggf. auch finally).
+
+$.get()
+  .success(function() {})
+  .error(function() {});
 
 <hr>
 

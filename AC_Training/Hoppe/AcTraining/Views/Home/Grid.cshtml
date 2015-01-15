@@ -1,0 +1,91 @@
+﻿<h1>My Grid</h1>
+
+<div id="chart"></div>
+<div id="grid"></div>
+
+    @section scripts {
+
+    <script>
+        $(document).ready(function() {
+
+            var dataSource = new kendo.data.DataSource({
+                type: 'odata',
+                transport: {
+                    read: {
+                        type: 'GET',
+                        url: '/odata/Customers',
+                        dataType: 'json'
+                    }
+                },
+                schema: {
+                    data: function (data) { return data.value; },
+                    total: function (data) { return data['odata.count']; },
+                    model: {
+                        id: 'Id',
+                        fields: {
+                            Id: { type: 'number' },
+                            FirstName: { type: 'string' },
+                            LastName: { type: 'string' },
+                            Mail: { type: 'string' },
+                            DateOfBirth: { type: 'date' },
+                            AmountOfOrders: { type: 'number' },
+                            AmountOfInvoices: { type: 'number' }
+                        }
+                    }
+                },
+                serverPaging: true,
+                serverSorting: true,
+                serverFiltering: true,
+                pageSize: 20,
+                sort: [
+                    // sort by "AmountOfOrders" in descending order and then by "AmountOfInvoices" in descending order
+                    { field: "AmountOfOrders", dir: "desc" },
+                    { field: "AmountOfInvoices", dir: "desc" }
+                ]
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                filterable: {
+                    mode: "row"
+                },
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Id" },
+                    { field: "FirstName", title: "First Name" },
+                    { field: "LastName", title: "Last Name" },
+                    { field: "Mail" },
+                    { field: "DateOfBirth", format: "{0:dd.MM.yyyy}" }
+                ]
+            });
+
+            $("#chart").kendoChart({
+                dataSource: dataSource,
+                title: { text: "Unsere besten Kunden" },
+                legend: { position: "top" },
+                seriesDefaults: { type: "line" },
+                series: [
+                    {
+                        field: "AmountOfOrders",
+                        name: "Amount of Orders"
+                    }, {
+                        field: "AmountOfInvoices",
+                        name: "Amount of Invoices"
+                    }
+                ],
+                categoryAxis: {
+                    field: "FirstName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                }
+            });
+
+        });
+    </script>
+}
