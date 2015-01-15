@@ -42,5 +42,10 @@ namespace AcTraining.Controllers
             return View();
         }
 
+        public ActionResult Button()
+        {
+            return View();
+        }
+
     }
 }
