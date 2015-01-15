@@ -67,7 +67,7 @@ namespace AcTraining.Controllers
             {
                 response.Write(
                     string.Format(
-                    "<b>Action '{0} :: {1}'<br /> Execute: {2}ms, Render: {3}ms.</b>",
+                    "<hr><h4>ActionFilter</h4>Action '{0} :: {1}'<br /> Execute: {2}ms, Render: {3}ms.",
                     filterContext.RouteData.Values["controller"],
                     filterContext.RouteData.Values["action"],
                     actionTimer.ElapsedMilliseconds,
