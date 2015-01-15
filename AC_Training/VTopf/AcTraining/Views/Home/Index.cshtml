@@ -23,6 +23,41 @@
 
 <a href="/Home/Grid" class="btn btn-primary btn-lg">Grid</a>
 
+<button id="changeColor" class="btn btn-warning btn-lg">Change Color</button>
+
+@section scripts
+{
+    <script>
+        var MyFirstModule = (function() {
+            var _color = "red";
+
+            var init = function() {
+                $("#changeColor").click(function() {
+                    $(this).css("color", _color);
+                });
+            };
+
+            var setColor = function(newColor) {
+                _color = newColor;
+            };
+            return {
+                init: init,
+                setColor: setColor
+            }
+        })();
+
+        $(function() {
+
+            var newColor = "green";
+
+            MyFirstModule.init();
+
+            MyFirstModule.setColor(newColor);
+        });
+
+    </script>
+}
+
 @Html.Partial("Test", new Customer {FirstName = "Verena", LastName = DateTime.Now.ToLongTimeString()})
 
 <div class="row">
