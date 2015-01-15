@@ -1,0 +1,75 @@
+﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" })
+
+
+<div id="index_template">
+
+    <h1 data-bind="text: header">Kunden</h1>
+
+<!-- <input type="text" data-bind="textInput: header"/>
+
+<button data-bind="click: setColor">KlickMich</button>
+
+-->
+
+
+<div>
+
+    <div data-bind="foreach: customers">
+
+
+        <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
+
+            <img data-bind="attr:{ src: $root.image($data)  }" class="img-thumbnail pull-right" />
+            <div class="panel-heading" data-bind="text: FirstName"></div>
+            <div class="panel-body">
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">#</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="value:Id">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">FirstName</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="value:FirstName">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">LastName</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="value:LastName">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <br style="clear: both;">
+
+
+
+</div>
+
+@section scripts
+{
+    <script>
+        var model = new CustomerViewModel();
+        ko.applyBindings(model, $('#index_template').get(0));
+        model.loadData();
+
+    </script>
+
+}
+

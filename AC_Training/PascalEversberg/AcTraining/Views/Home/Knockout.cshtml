@@ -1,0 +1,60 @@
+﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" }) 
+
+
+<div id="index_template">
+
+    <h1 data-bind="text: header, style: {color: color }">Kunden</h1>
+    <input type="text" data-bind="textInput: header"/>
+
+    <h1 data-bind="style: {color: color}">:-)</h1>
+
+<button data-bind="click: setColor">setColor</button>
+    
+    <div data-bind="foreach: customers">
+        <div class="panel panel-default pull-left col-md-5 " style="padding:0; margin-right: 20px;">
+
+            <img class="img-thumbnail pull-right" data-bind="attr: {src: $root.getImage($data) }"/>
+            <div class="panel-heading" data-bind="text: FirstName">Name</div>
+            <div class="panel-body">
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">#</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="value: Id">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">FirstName</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="value: FirstName">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">LastName</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="value: LastName">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <br style="clear: both;">
+
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+
+</div>
+
+@section scripts {
+    <script>
+        var model = new CustomerViewModel();
+        ko.applyBindings(model, $('#index_template').get(0));
+        model.loadData();
+    </script>
+
+}

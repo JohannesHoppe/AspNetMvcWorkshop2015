@@ -1,0 +1,52 @@
+﻿<p></p>
+@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" }) 
+
+
+<div id="index_template">
+    <h1 data-bind="text: header, style: { color: color }">Kunden</h1>
+    <input data-bind="textInput: header" />
+    <h1 data-bind="style: { color: color }">==============================================</h1>
+    <p></p>
+    <button data-bind="click: setColor" class="btn btn-warning btn-lg">Klick Mich!</button>
+    <p></p>
+    <div data-bind="foreach: customers">
+        <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
+            <img data-bind="attr: { src: $root.getImage($data) }" class="img-thumbnail pull-right" />
+            <div data-bind="text: FirstName" class="panel-heading">Name</div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">#</label>
+                        <div class="col-sm-7">
+                            <input data-bind="textInput: Id" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">FirstName</label>
+                        <div class="col-sm-7">
+                            <input data-bind="textInput: FirstName" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">LastName</label>
+                        <div class="col-sm-7">
+                            <input data-bind="textInput: LastName" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br style="clear: both;">
+    <div>
+        <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var model = new CustomerViewModel();
+        ko.applyBindings(model, $('#index_template').get(0));
+        model.loadData();
+    </script>
+}

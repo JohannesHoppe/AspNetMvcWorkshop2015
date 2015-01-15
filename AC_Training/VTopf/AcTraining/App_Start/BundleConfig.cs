@@ -9,7 +9,10 @@ namespace AcTraining
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/kendo/2014.2.716/kendo.all.min.js"));
+                        "~/Scripts/kendo/2014.2.716/kendo.all.min.js",
+                        "~/Scripts/knockout-3.2.0.js",
+                        "~/Scripts/knockout.mapping-latest.debug.js",
+                        "~/Scripts/app/*.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

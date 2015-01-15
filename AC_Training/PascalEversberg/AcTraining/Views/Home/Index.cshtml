@@ -8,10 +8,12 @@
 
     @Html.ActionLink("Gehe zu Test", "Test", "Home", new { @class="btn btn-primary btn-lg"})
     @Html.ActionLink("Reset Data", "Reset", "api", null, new { @class="btn btn-warning btn-lg"})
+    <button id="test" class="btn btn-warning btn-lg">Text :-)</button>
+    @Html.ActionLink("Gehe zu Knockout", "Knockout", "Home", new { @class="btn btn-danger btn-lg"})
 </div>
 
 @Html.ActionLink("Gehe zu Test", "Test", "Home")  
-@Html.Partial("Test", new Customer {FirstName = "Petra"})
+@Html.Partial("Test", new Customer {FirstName = "Pascal"})
 
 <div class="row">
     <div class="col-md-4">
@@ -37,6 +39,45 @@
 {
     <script>
         $("h1").css("color","red")
+    </script>
+
+    <script>
+
+        var myFirstModule = (function() {
+
+            var _color = "red";
+            var _events = $({});
+
+            var init = function () {
+                //var init = function (farbe) {
+                //_color = farbe;
+                $("#test").click(function() {
+                    $(this).css("color", _color);
+                });
+            };
+
+            var setColor = function(newColor) {
+                _color = newColor;
+            };
+
+            return {
+                init: init,
+                setColor: setColor,
+                events : _events
+        }
+        })();
+
+        $(function() {
+            // Hier wird die Farbe angegeben
+            //var farbe "blue";
+            // myFirstModule.init(farbe);
+
+            //Alternative mit set-Funktion
+            var newColor = "green";
+            myFirstModule.setColor(newColor);
+            myFirstModule.init();
+        });
+
     </script>
 }
 

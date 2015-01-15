@@ -1,0 +1,98 @@
+﻿@*<input id="datetimepicker" />
+
+    @section scripts
+    {
+        <script>
+            $(function() {
+                $("#datetimepicker").kendoDateTimePicker({ value: new Date() });
+            });
+        </script>
+    }*@
+
+
+<div class="demo-section k-content">
+    <div id="chart"></div>
+</div>
+
+@section scripts
+{
+    <script>
+        function createChart() {
+
+            var datasource = new kendo.data.DataSource({
+                type: "odata",
+                transport: {
+                    read: {
+                        type: 'GET',
+                        url: '/odata/Customers',
+                        dataType: 'json'
+                    }
+                },
+                schema: {
+                    data: function (data) { return data.value; },
+                    total: function (data) { return data['odata.count']; },
+                    model: {
+                        fields: {
+                            Id: { type: "number" },
+                            FirstName: { type: "string" },
+                            LastName: { type: "string" },
+                            Mail: { type: "string" },
+                            //Phone: { type: "string" },
+                            AmountOfOrders: { type: "number" },
+                            AmountOfInvoices: { type: "number" }
+                        }
+                    }
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            });
+
+
+            $("#chart").kendoChart({
+                dataSource: datasource,
+                title: {
+                    text: "Users Orders and Invoices"
+                },
+                legend: {
+                    position: "top"
+                },
+                seriesDefaults: {
+                    type: "line"
+                },
+                series: [{
+                    field: "AmountOfOrders",
+                    name: "AmountOfOrders"
+                },
+                {
+                    field: "AmountOfInvoices",
+                    name: "AmountOfInvoices"
+                }],
+                categoryAxis: {
+                    field: "LastName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    labels: {
+                        format: "N0"
+                    },
+                    majorUnit: 20
+                },
+                tooltip: {
+                    visible: true,
+                    shared: true,
+                    format: "N0"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
+    </script>
+}

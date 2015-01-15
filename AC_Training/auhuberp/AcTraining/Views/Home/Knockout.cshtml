@@ -1,0 +1,63 @@
+﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" }) 
+
+
+<div id="index_template">
+
+    <h1 data-bind="text: header,
+    style: { color: color }">Kundenn</h1>
+    <input type="text" data-bind="textInput: header" />
+
+    <h1 data-bind="style: { color: color }">:-)</h1>
+
+    <button data-bind="click: setColor">Klick mich</button>
+
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+
+    <div data-bind="foreach: customers">
+
+        <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
+            @*<img data-bind="src: IdGravatar" src="http://www.gravatar.com/avatar/1?d=wavatar&f=z" class="img-thumbnail pull-right" />*@
+            <img data-bind="attr: { src: $root.getImage($data) }" class="img-thumbnail pull-right" />
+            <div class="panel-heading" data-bind="    text: FirstName">Name</div>
+            <div class="panel-body">
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">#</label>
+                        <div class="col-sm-7">
+                            <input data-bind="textInput: Id" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">FirstName</label>
+                        <div class="col-sm-7">
+                            <input data-bind="textInput: FirstName" type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">LastName</label>
+                        <div class="col-sm-7">
+                            <input data-bind="textInput: LastName" type="text" class="form-control">
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br style="clear: both;">
+@section scripts {
+    <script>
+        var model = new CustomerViewModel();
+        ko.applyBindings(model, $('#index_template').get(0));
+        model.loadData();
+    </script>
+}
