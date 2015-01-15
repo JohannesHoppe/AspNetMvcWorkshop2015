@@ -50,11 +50,76 @@ Danach kann das Beispiel unter
 betrachtet werden.
 
 
-![Owin Startup](Images/signalr_example.png)
+![SignalR Example](Images/signalr_example.png)
 
 
-### Eigenes Beispiel
+### Eigenes Beispiel (Chat)
 
+Am einfachsten kann man SignalR verwendet, wenn man von "Hubs" implementiert. Die Grundlage bildet eine C#-Klasse, die von "Hub" erbt. Auf Client-Seite kann dann eine automatisch generiertes JavaScript verwendet werden, welches unter der Adresse **"/signalr/hubs"** zu finden ist.   
+
+```
+public class Chat : Hub
+{
+    public void Send(string name, string message)
+    {
+        Clients.All.broadcastMessage(name, message);
+    }
+}
+```
+
+Die BundleConfig muss erneut angepasst werden:
+
+```
+bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            "~/Scripts/jquery-{version}.js",
+            "~/Scripts/jquery.signalR-{version}.js" // NEU
+            // ... weitere
+            );
+
+```
+
+Die Adresse **"/signalr/hubs"** muss leider manuell hinzugefügt werden:
+
+```
+@Scripts.Render("~/bundles/jquery")
+<script src="~/signalr/hubs"></script>
+
+```
+
+Anschließend steht die Methode `send` im Client zur Verfügung:
+
+```
+var ChatViewModel = function () {
+
+    var self = this;
+    var chat = $.connection.chat;
+    
+    self.name = ko.observable();
+    self.message = ko.observable();
+    self.messages = ko.observableArray();
+
+    self.sendMessage = function() {
+        chat.server.send(self.name(), self.message());
+        self.message("");
+    }
+
+    chat.client.broadcastMessage = function (name, message) {
+
+        self.messages.push({
+            name: name,
+            message: message
+        });
+    };
+
+    $.connection.hub.start().done(function() {
+        console.log("chat started!");
+    });
+};
+```
+
+### Aufgabe: Implementiere eine Oberfläche für dieses View-Model, Beispiel:
+
+![SignalR Chat](Images/signalr_chat.png)
 
 
 <hr>

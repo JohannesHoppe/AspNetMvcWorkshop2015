@@ -1,0 +1,42 @@
+﻿<h1>SignalR Chat</h1>
+
+
+<div id="chat_template">
+    
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-1">Name</label>
+            <input type="text" data-bind="textInput: name" class="form-control">
+
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-1">Message</label>
+            <input type="text" data-bind="textInput: message" class="form-control">
+        </div>
+
+        <button data-bind="click: sendMessage" class="btn">Send!</button>
+    </form>
+
+    <hr />
+    <h3>Messages</h3>
+
+    <ul data-bind="foreach: messages">
+        <li>
+            <b data-bind="text: name"></b>:
+            <span data-bind="text: message"></span>
+        </li>
+    </ul>
+
+</div>
+
+@section scripts {
+    <script>
+
+        $(function() {
+            var model = new ChatViewModel();
+            ko.applyBindings(model, $('#chat_template').get(0));
+        })
+
+    </script>
+}

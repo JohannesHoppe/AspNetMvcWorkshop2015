@@ -25,7 +25,8 @@ namespace AcTraining
 
             // OData
             ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
-            var customers = builder.EntitySet<Customer>("Customers");
+            builder.EntitySet<Customer>("Customers");
+            builder.EntitySet<Customer>("Customers2");
             //customers.EntityType.Ignore(c => c.LastName);
 
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
