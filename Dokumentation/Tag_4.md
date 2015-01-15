@@ -18,6 +18,16 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 ### http://johanneshoppe.github.io/JsBestPractices/
 
 
+Johannes 4 goldene Regeln für Modulares JavaScript:
+1. Namespaces
+2. Immediate functions
+2. Private and public members 
+3. Abhängigkeitsmanagement
+
+Zutaten:
+1. Immediate Funktionen: `(function() {})()`
+2. [Revealing Module Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript)
+
 
 <a name="knockout"></a>
 ## 2. Knockout.js
