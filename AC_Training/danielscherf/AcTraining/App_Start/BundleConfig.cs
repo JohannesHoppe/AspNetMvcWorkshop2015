@@ -10,6 +10,9 @@ namespace AcTraining
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/knockout-{version}.js",
+                        "~/Scripts/knockout.mapping-latest.debug.js",
+                        "~/Scripts/app/*.js",
                         "~/Scripts/kendo/2014.2.716/kendo.all.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -26,7 +29,6 @@ namespace AcTraining
                       "~/Content/site.css",
                       "~/Content/kendo/2014.2.716/kendo.bootstrap.min.css",
                       "~/Content/kendo/2014.2.716/kendo.common-bootstrap.min.css"));
-
 
         }
     }

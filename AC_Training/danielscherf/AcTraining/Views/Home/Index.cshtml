@@ -1,7 +1,7 @@
 ﻿@using System.Drawing
 @using AcTraining.Models
 
-@model string 
+@model string
 
 <div class="jumbotron">
     <h1>Johannes!</h1>
@@ -9,21 +9,63 @@
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
-@Html.Partial("Test", new Customer {FirstName = "Daniel", LastName = "Scherf", Mail = DateTime.Now.ToShortTimeString()})
+@Html.Partial("Test", new Customer { FirstName = "Daniel", LastName = "Scherf", Mail = DateTime.Now.ToShortTimeString() })
 
 
-@Html.ActionLink("Gehe zu Test", "Test", "Home", new {@class="btn btn-primary btn-lg"});
-@Html.ActionLink("Reset data", "Reset", "api", null, new {@class="btn btn-warning btn-lg"});
-<br/>
-<br/>
+@Html.ActionLink("Gehe zu Test", "Test", "Home", new { @class = "btn btn-primary btn-lg" });
+@Html.ActionLink("Reset data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg" });
+@Html.ActionLink("Knockout", "Knockout", "Home", new { @class = "btn btn-primary btn-lg" })
+<br />
+<br />
 <a href="/odata/Customers?$top=5&$skip=2" class="btn btn-warning">Beispiel Paging mit $top=5 und $skip=2</a>
-<br/>
+<br />
 <a href="/odata/Customers?$top=5&$skip=2&$inlinecount=allpages" class="btn btn-warning">Beispiel Paging mit $top=5 und $skip=2 und inlinecount = allpages</a>
 <br />
 <a href="/odata/Customers?$filter=FirstName eq 'Hans'" class="btn btn-warning">$filter=FirstName eq 'Hans'</a>
+<br />
+<a href="/Home/Grid" class="btn btn-warning">Go to Grid</a>
+
+<br />
+
+
 
 @section footer
 {
     <h1>@Model</h1>
-    <a href="/odata/$metadata">/odata/metadata</>
+    <a href="/odata/$metadata">/odata/metadata</a>
+}
+
+<button id="test" class="btn btn-warning btn-lg">Text ;-)</button>
+
+@section scripts
+{
+    <script>
+        var _color = "red";
+
+        var MyFirstModule = (function () {
+            var _color = "red";
+            var init = function () {
+                $("#test").click(function () {
+                    $(this).css("color", _color);
+                });
+
+            };
+            var setColor = function (newColor) {
+                _color = newColor;
+            };
+
+
+            return {
+                init: init,
+                setColor: setColor
+            }
+
+        })();
+
+        $(function () {
+            var newColor = "green";
+            MyFirstModule.setColor(newColor);
+            MyFirstModule.init();
+        });
+    </script>
 }
