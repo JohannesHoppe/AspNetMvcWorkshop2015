@@ -3,6 +3,9 @@
 <div class="jumbotron">
     <h1>@ViewBag.Title</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+    
+
+    
 
     @Html.ActionLink("Gehe zum Grid", "Grid", "Home",null,  new { @class="btn btn-primary btn-lg" }) 
     @Html.ActionLink("Reset Data", "Reset", "api", null, new { @class="btn btn-warning btn-lg" }) 
@@ -20,3 +23,46 @@
     <a href="/odata/$metadata">/odata/$metadata</a>
 }
   
+<button id="test" class="btn btn-warning btn-lg">Text :-)</button>
+
+@section scripts
+{
+    <script>
+
+        var myFirstNamespace = myFirstNamespace || {};
+
+
+        myFirstNamespace.myFirstModule = (function ($) {
+
+            var _color = "red";
+
+            var init = function() {
+
+                $("#test").click(function() {
+                    $(this).css("color", _color);
+                });
+            };
+
+            var setColor = function(color) {
+                _color = color;
+            }
+
+            return {
+                init: init,
+                setColor: setColor
+            }
+        })(window.jQuery);
+        
+
+        // TODO: ich möchte hier die Farbe angeben können!
+        var newColor = "green";
+
+        $(function() {
+
+            myFirstModule.setColor(newColor);
+            myFirstModule.init();
+        });
+
+    </script>
+
+}

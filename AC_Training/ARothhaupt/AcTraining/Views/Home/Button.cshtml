@@ -1,0 +1,41 @@
+﻿
+
+<button id="test" class="btn btn-warning btn-lg">Text :-) </button>
+
+ @section scripts {
+     <script>
+         var myFirstModule = (function() {
+
+             var _color = "red";
+
+             var init = function() {
+
+                 _color = "blue";
+                 $("#test").click(function() {
+                     $(this).css("color", _color);
+                 });
+
+             };
+
+             var setColor = function(color) {
+                 _color = color;
+             };
+
+             return {
+                 init: init,
+                setColor: setColor
+             }
+         })();
+
+         $(function() {
+
+             var newColor = "green";
+             myFirstModule.setColor(newColor);
+             myFirstModule.init();
+
+             
+         });
+         
+     </script>
+
+ }
