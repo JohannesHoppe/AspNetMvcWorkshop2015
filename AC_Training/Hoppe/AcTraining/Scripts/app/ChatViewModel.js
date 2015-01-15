@@ -1,18 +1,18 @@
 ﻿var ChatViewModel = function () {
 
     var self = this;
-    var chat = $.connection.chat;
+    var chatHub = $.connection.chatHub;
     
     self.name = ko.observable();
     self.message = ko.observable();
     self.messages = ko.observableArray();
 
     self.sendMessage = function() {
-        chat.server.send(self.name(), self.message());
+        chatHub.server.send(self.name(), self.message());
         self.message("");
     }
 
-    chat.client.broadcastMessage = function (name, message) {
+    chatHub.client.broadcastMessage = function (name, message) {
 
         self.messages.push({
             name: name,

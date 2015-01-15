@@ -4,6 +4,8 @@ using System.Net;
 using System.Web.Http;
 using System.Web.Http.OData;
 using AcTraining.Models;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.SignalR;
 
 namespace AcTraining.Controllers
 {
@@ -15,7 +17,12 @@ namespace AcTraining.Controllers
     */
     public class Customers2Controller : ODataController
     {
-        private DataContext db = new DataContext();
+        private readonly DataContext db;
+
+        public Customers2Controller(DataContext db)
+        {
+            this.db = db;
+        }     
 
         // GET: odata/Customers2
         [EnableQuery]
@@ -132,16 +139,10 @@ namespace AcTraining.Controllers
             db.Customers.Remove(customer);
             db.SaveChanges();
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+            var context = GlobalHost.ConnectionManager.GetHubContext<CustomerHub>();
+            context.Clients.All.customerDeleted(key);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         private bool CustomerExists(int key)

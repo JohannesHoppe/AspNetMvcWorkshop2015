@@ -2,7 +2,7 @@
 
 namespace AcTraining.Controllers
 {
-    public class Chat : Hub
+    public class ChatHub : Hub
     {
         public void Send(string name, string message)
         {

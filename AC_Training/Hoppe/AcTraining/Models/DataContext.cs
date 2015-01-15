@@ -6,10 +6,6 @@ namespace AcTraining.Models
 {
     public class DataContext: DbContext 
     {
-        public DataContext()
-        {
-            
-        }
         public DataContext(DbConnection connection) : base(connection, true)
         {
             
