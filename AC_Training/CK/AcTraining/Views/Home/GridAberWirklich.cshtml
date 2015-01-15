@@ -1,0 +1,122 @@
+﻿
+<div>
+    <h1>
+        DAS IST SIEMENS
+    </h1>
+</div>
+
+<div id="GridAberWirklich">
+</div>
+<div id="grid">
+</div>
+
+@section scripts
+{
+    <script>
+        function createChart() {
+
+            var dataSource = new kendo.data.DataSource(
+            {
+                type: "odata",
+                transport: {
+                    read:
+                    {
+                        type: 'GET',
+                        url: '/odata/Customers',
+                        dataType: 'json'
+                    }
+                },
+
+                schema: {
+                    data: function (data) { return data.value; },
+                    total: function (data) { return data['odata.count']; },
+                    model: {
+                        id: 'Id',
+                        fields: {
+                            ID: { type: "number" },
+                            FirstName: { type: "string" },
+                            LastName: { type: "string" },
+                            Mail: { type: "string" },
+                            AmountOfOrders: { type: "number" },
+                            AmountOfInvoices: { type: "number" }
+                        }
+                    }
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                filterable: {
+                    mode: 'row'
+                },
+                sortable: true,
+                pageable: true,
+                columns: [
+                    {
+                        field: "Id"
+                    },
+                    {
+                        field: "FirstName",
+                        title: "First Name"
+                    },
+                    {
+                        field: "LastName",
+                        title: "Lascht"
+                    },
+                    {
+                        field: "Mail",
+                        title: "Mail"
+                    }
+                ]
+            });
+  
+            $("#GridAberWirklich").kendoChart({
+                dataSource: dataSource,
+                title: {
+                    text: "Super Siemens Kunden"
+                },
+                legend: {
+                    position: "top"
+                },
+                seriesDefaults: {
+                    type: "line"
+                },
+                series: [{
+                    field: "AmountOfOrders",
+                    name: "Orders"
+                }, {
+                    field: "AmountOfInvoices",
+                    name: "Invoices"
+                }],
+                categoryAxis: {
+                    field: "FirstName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    labels: {
+                        format: "N0"
+                    },
+                    majorUnit: 150
+                },
+                tooltip: {
+                    visible: true,
+                    shared: true,
+                    format: "N0"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+
+    </script>
+}
