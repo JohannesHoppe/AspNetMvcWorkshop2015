@@ -1,4 +1,5 @@
 ﻿@using AcTraining.Models
+@model string
 
 <div class="jumbotron">
     <h1>Flo77 Inc.</h1>
@@ -9,23 +10,32 @@
     @Html.ActionLink("Goto test page","Test","Home", new {@class="btn btn-primary btn-lg"})
     @Html.ActionLink("Reset data","Reset","api",null, new {@class="btn btn-warning btn-lg"})
     @Html.ActionLink("Kendo UI","Grid","Home",null, new {@class="btn btn-primary btn-lg"})
+    @Html.ActionLink("Knockout JS","Knockout","Home",null, new {@class="btn btn-danger btn-lg"})
+
+    <p><h2>Java Script:</h2></p>
+    <p>
+        <button id="test" class="btn btn-warning btn-lg">Change Color</button>
+        <button id="test2" class="btn btn-primary btn-lg">Auto ist weg!</button>
+    </p>
 
 </div>
 <div>
-@section footer {
+    @section footer {
     <p>@Model</p>
     <a href="/odata/Customers?$top=5&$skip=2" class="btn btn-warning">Beispiel Paging</a>
     <a href="/odata/Customers?$top=5&$skip=2&$inlinecount=allpages" class="btn btn-warning">Beispiel Paging mit Count</a>
     <a href="/odata/Customers?$filter=FirstName eq 'Hans'" class="btn btn-warning">Beispiel Filtern</a>
     <p></p>
-}
+    }
 </div>
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
-        <p>ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
-        a broad range of clients, including browsers and mobile devices. ASP.NET Web API
-        is an ideal platform for building RESTful applications on the .NET Framework.</p>
+        <p>
+            ASP.NET Web API is a framework that makes it easy to build HTTP services that reach
+            a broad range of clients, including browsers and mobile devices. ASP.NET Web API
+            is an ideal platform for building RESTful applications on the .NET Framework.
+        </p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301870">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
@@ -39,3 +49,47 @@
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301872">Learn more &raquo;</a></p>
     </div>
 </div>
+
+@section scripts
+{
+    <script>
+        var myFirstModule = (function() {
+            var _color = "red";
+
+            //var _events = $({});
+
+            var init = function() {
+                $("#test").click(function() {
+                    $(this).css("color", _color);
+                });
+
+                //$("#test2").click(function() {
+                //    _events.trigger("AutoWeg","Audi!");
+                //});
+            };
+
+            var setColor = function(color) {
+                _color = color;
+            };
+
+            return {
+                init: init,
+                setColor: setColor//,
+                //events: _events
+            };
+        })();
+
+        $(function() {
+
+            var newColor = "green";
+
+            myFirstModule.init();
+            myFirstModule.setColor(newColor);
+
+            //myFirstModule.on("AutoWeg", function() {
+            //    $("#test2").css("color", "red");
+            //});
+
+        })();
+    </script>
+}
