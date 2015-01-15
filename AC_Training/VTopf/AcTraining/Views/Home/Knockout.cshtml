@@ -1,0 +1,80 @@
+﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" })
+
+
+<div id="index_template">
+
+    <h1 data-bind="text: header, style: {color: color}">Kunden</h1>
+
+    <input type="text" data-bind="textInput: header" />
+
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+
+    <h1 data-bind="text: smilie, style: {color: color}">:-(</h1>
+
+    <button data-bind="click: function() { setColor(); changeText() }">Klick mich</button>
+    <div data-bind="foreach: customers">
+
+        <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
+
+            <!-- <img src="http://www.gravatar.com/avatar/1?d=wavatar&f=y" class="img-thumbnail pull-right"/>-->
+            <img data-bind="attr: {src: $root.getCustomerImage($data)}" class="img-thumbnail pull-right" />
+            <div class="panel-heading" data-bind="text: FirstName">Name</div>
+            <div class="panel-body">
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">#</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="textInput: Id">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">First Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="textInput: FirstName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Last Name</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control" data-bind="textInput: LastName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date of Birth</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                class="datepicker"
+                                data-bind="textInput: DateOfBirth,
+                                my_kendo_datepicker: { format: 'dd.MM.yyyy' }" />
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <br style="clear: both;">
+</div>
+
+@section scripts{
+    <script>
+        var model = new CustomerViewModel();
+        
+        ko.bindingHandlers.my_kendo_datepicker = {
+            init: function (element, valueAccessor) {
+                var options = valueAccessor() || {};
+                $(element).kendoDatePicker(options);
+            }
+        };
+        ko.applyBindings(model, $('#index_template').get(0));
+        model.loadData();
+
+        
+    </script>
+}
