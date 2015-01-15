@@ -29,6 +29,11 @@ Zutaten:
 2. [Revealing Module Pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript)
 
 
+Abhängigkeiten in JavaScript:
+1. Auf JavaScript Code
+2. ....
+3. .... (Knockout)
+
 <a name="knockout"></a>
 ## 2. Knockout.js
 
