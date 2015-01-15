@@ -30,9 +30,9 @@ Zutaten:
 
 
 Abhängigkeiten in JavaScript:
-1. Auf JavaScript Code
-2. ....
-3. .... (Knockout)
+1. Auf JavaScript Code (Module Pattern, ODER require.js)
+2. Auf Ereignisse (Don`t call us, we call you! / Ansonsten: Kommunikation mit der Außenwelt NUR über Events. Hinweis: Promises sind auch events!)
+3. DOM (Knockout)
 
 <a name="knockout"></a>
 ## 2. Knockout.js

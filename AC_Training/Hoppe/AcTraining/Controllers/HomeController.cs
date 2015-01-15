@@ -10,7 +10,7 @@ namespace AcTraining.Controllers
 
         public HomeController(ICustomerRepository rep)
         {
-            this.rep = rep;
+            this.rep = rep;           
         }
 
         public ActionResult Index()
@@ -21,6 +21,11 @@ namespace AcTraining.Controllers
         }
 
         public ActionResult Grid()
+        {
+            return View();
+        }
+
+        public ActionResult Knockout()
         {
             return View();
         }

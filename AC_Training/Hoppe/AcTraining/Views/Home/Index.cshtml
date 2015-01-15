@@ -3,11 +3,9 @@
 <div class="jumbotron">
     <h1>@ViewBag.Title</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-    
-
-    
 
     @Html.ActionLink("Gehe zum Grid", "Grid", "Home",null,  new { @class="btn btn-primary btn-lg" }) 
+    @Html.ActionLink("Gehe zu Knockout", "Knockout", "Home", null, new { @class = "btn btn-danger btn-lg" }) 
     @Html.ActionLink("Reset Data", "Reset", "api", null, new { @class="btn btn-warning btn-lg" }) 
 </div> 
 
@@ -23,25 +21,30 @@
     <a href="/odata/$metadata">/odata/$metadata</a>
 }
   
-<button id="test" class="btn btn-warning btn-lg">Text :-)</button>
+<button id="test" class="btn btn-warning btn-lg">Auto stehlen!</button>
 
 @section scripts
 {
     <script>
 
-        var myFirstNamespace = myFirstNamespace || {};
-
-
-        myFirstNamespace.myFirstModule = (function ($) {
+        var myFirstModule = (function($) {
 
             var _color = "red";
+            var _events = $({});
 
             var init = function() {
 
                 $("#test").click(function() {
+
                     $(this).css("color", _color);
+                    _events.trigger("autoWeg", "Porsche!");
+
                 });
             };
+
+            var onAutoWeg = function (callback) {
+                _events.on("autoWeg", callback);
+            }
 
             var setColor = function(color) {
                 _color = color;
@@ -49,18 +52,24 @@
 
             return {
                 init: init,
-                setColor: setColor
+                setColor: setColor,
+                events: {
+                    onAutoWeg: onAutoWeg
+                }
+                
             }
         })(window.jQuery);
-        
 
-        // TODO: ich möchte hier die Farbe angeben können!
         var newColor = "green";
 
         $(function() {
 
             myFirstModule.setColor(newColor);
             myFirstModule.init();
+
+            myFirstModule.events.onAutoWeg(function () {
+                $("h1").text("Das ist ja schrecklich!!!");
+            });
         });
 
     </script>
