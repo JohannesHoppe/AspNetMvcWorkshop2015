@@ -2,14 +2,16 @@
 
 <div id="index_template">
 
-    <h1 data-bind="text: header, style: { color: color }">Kunden</h1>
+    <h1 data-bind="text: header">Kunden</h1>
     
-    <button data-bind="click: setColor">Klick mich</button>
     <button data-bind="click: activeError">Fehler</button>
     
-    <div style="color:red;display:none" data-bind="visible: hasError">
-        Es ist was schlimmes passiert!
+    <div class="alert alert-danger pull-right " role="alert" data-bind="visible: hasError">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        Very urgent error!
     </div>
+
       
     <div>
         
