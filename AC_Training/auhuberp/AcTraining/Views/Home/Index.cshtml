@@ -7,20 +7,52 @@
     @Html.ActionLink("Gehe zu Test", "Test", "Home", new {@class="btn btn-primary btn-lg"})
     @Html.ActionLink("Reset Data", "Reset", "api", null, new {@class="btn btn-warning btn-lg"})
     @Html.ActionLink("LineChart and Grid", "LineChart", "Home", new {@class="btn btn-warning btn-lg"})
+    @Html.ActionLink("Gehe zu Knockout", "Knockout", "Home", new {@class="btn btn-danger btn-lg"})
 </div>
 
 @Html.Partial("Test", new Customer(){ FirstName = DateTime.Now.ToLongDateString() })
 
-<br/>
-<a href="/odata/Customers?$top=5&$skip=2" >Das ist Test top=5 - skip=2</a>
+<br />
+<a href="/odata/Customers?$top=5&$skip=2">Das ist Test top=5 - skip=2</a>
+
+<br />
+<button id="test" class="btn btn-warning btn-lg">Auto weg</button>
 
 @section scripts
 {
-    
+    <script>
+        var myFirstModule = (function () {
+            var _color = "red";
+
+            var init = function () {
+                $("#test").click(
+                    function () {
+                        $(this).css("color", _color);
+                    });
+            };
+            var setColor = function (myColor) {
+                _color = myColor;
+            };
+
+            return {
+                init: init,
+                setColor: setColor,
+                
+            };
+        })();
+
+        $(function () {
+            // TODO: ich möchte hier die Farbe angeben können!
+            var newColor = "green";
+            myFirstModule.setColor(newColor);
+            myFirstModule.init();
+        });
+
+    </script>
 }
 
 @section footer
 {
 <h1 style="color: greenyellow">@Model</h1>
-    
+
 }
