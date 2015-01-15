@@ -1,5 +1,6 @@
 ﻿<h1>My Grid</h1>
 
+<div id="chart"></div>
 <div id="grid"></div>
 
     @section scripts {
@@ -7,9 +8,8 @@
     <script>
         $(document).ready(function() {
 
-
             var dataSource = new kendo.data.DataSource({
-                type: "odata",
+                type: 'odata',
                 transport: {
                     read: {
                         type: 'GET',
@@ -18,25 +18,30 @@
                     }
                 },
                 schema: {
-                    data: function(data) { return data.value; },
-                    total: function(data) { return data['odata.count']; },
+                    data: function (data) { return data.value; },
+                    total: function (data) { return data['odata.count']; },
                     model: {
                         id: 'Id',
                         fields: {
-                            Id: { type: "number" },
-                            FirstName: { type: "string" },
-                            LastName: { type: "string" },
-                            Mail: { type: "string" },
-                            AmountOfOrders: { type: "number" },
-                            AmountOfInvoices: { type: "number" },
-                            DateOfBirth: { type: "date" }
+                            Id: { type: 'number' },
+                            FirstName: { type: 'string' },
+                            LastName: { type: 'string' },
+                            Mail: { type: 'string' },
+                            DateOfBirth: { type: 'date' },
+                            AmountOfOrders: { type: 'number' },
+                            AmountOfInvoices: { type: 'number' }
                         }
                     }
                 },
-                pageSize: 20,
                 serverPaging: true,
+                serverSorting: true,
                 serverFiltering: true,
-                serverSorting: true
+                pageSize: 20,
+                sort: [
+                    // sort by "AmountOfOrders" in descending order and then by "AmountOfInvoices" in descending order
+                    { field: "AmountOfOrders", dir: "desc" },
+                    { field: "AmountOfInvoices", dir: "desc" }
+                ]
             });
 
             $("#grid").kendoGrid({
@@ -52,8 +57,33 @@
                     { field: "FirstName", title: "First Name" },
                     { field: "LastName", title: "Last Name" },
                     { field: "Mail" },
-                    { field: "DateOfBirth", format: "{0:dd.MM.yyyy hh:mm}" }
+                    { field: "DateOfBirth", format: "{0:dd.MM.yyyy}" }
                 ]
+            });
+
+            $("#chart").kendoChart({
+                dataSource: dataSource,
+                title: { text: "Unsere besten Kunden" },
+                legend: { position: "top" },
+                seriesDefaults: { type: "line" },
+                series: [
+                    {
+                        field: "AmountOfOrders",
+                        name: "Amount of Orders"
+                    }, {
+                        field: "AmountOfInvoices",
+                        name: "Amount of Invoices"
+                    }
+                ],
+                categoryAxis: {
+                    field: "FirstName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                }
             });
 
         });

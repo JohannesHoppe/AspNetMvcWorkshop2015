@@ -313,6 +313,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\CustomerViewModel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -455,6 +456,10 @@
     <Content Include="Scripts\kendo\2014.2.716\kendo.view.min.js" />
     <Content Include="Scripts\kendo\2014.2.716\kendo.web.min.js" />
     <Content Include="Scripts\kendo\2014.2.716\kendo.window.min.js" />
+    <Content Include="Scripts\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\knockout-3.2.0.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -475,9 +480,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\Test.cshtml" />
     <None Include="Views\Home\Grid.cshtml" />
+    <Content Include="Views\Home\Knockout.cshtml" />
+    <Content Include="Views\Home\Knockout.Before.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

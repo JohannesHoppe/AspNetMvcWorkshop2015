@@ -1,0 +1,64 @@
+﻿<div id="grid"></div>
+
+@section scripts {
+    <script>
+        $(document).ready(function() {
+
+            var dataSource = new kendo.data.DataSource({
+                type: "odata",
+                transport: {
+                    read: {
+                        type: 'GET',
+                        url: '/odata/Customers',
+                        dataType: 'json'
+                    }
+                },
+                schema: {
+                    data: function(data) { return data.value; }, // odata version 3 kompatibel
+                    total: function (data) { return data['odata.count']; }, // odata version 3 kompatibel
+                    model: {
+                        id: 'Id',
+                        fields: {
+                            Id: { type: "number" },
+                            FirstName: { type: "string" },
+                            LastName: { type: "string" },
+                            Mail: { type: "string" },
+                            AmountOfOrders: { type: "string" },
+                            AmountOfInvoices: { type: "number" },
+                            DateOfBirth: { type: "date" }
+                        }
+                    }
+                },
+                pageSize: 20, //Server sendet nur 20 Einträge, erst beim Blättern mehr
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            });
+
+            $("#grid").kendoGrid({
+                dataSource: dataSource,
+                height: 550,
+                filterable: {
+                    mode: "row"
+                },
+                sortable: true,
+                pageable: true,
+                columns: [
+                    { field: "Id" },
+                    { field: "FirstName", title: "First Name" },
+                    { field: "LastName", title: "Last Name" },
+                    { field: "Mail" },
+                    { field: "DateOfBirth", format: "{0:dd.MM.yyyy hh:mm}" }
+                ]
+            });
+        });
+    </script>
+
+    <script>
+        var foo = function(){
+            return {
+                x: "looks like c#"
+            };
+        }
+    </script>
+}
