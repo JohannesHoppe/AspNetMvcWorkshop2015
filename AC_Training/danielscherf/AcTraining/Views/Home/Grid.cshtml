@@ -9,56 +9,57 @@
         </script>
     }*@
 
-
+<div class="demo-section k-content">
+    <div id="chart"></div>
+</div>
 <div id="grid"></div>
 
 
 @section scripts
 {
     <script>
+        var datasource = new kendo.data.DataSource({
+            type: "odata",
+            transport: {
+                read: {
+                    type: 'GET',
+                    url: '/odata/Customers',
+                    dataType: 'json'
+                }
+            },
+            schema: {
+                data: function (data) { return data.value; },
+                total: function (data) { return data['odata.count']; },
+                model: {
+                    fields: {
+                        Id: { type: "number" },
+                        FirstName: { type: "string" },
+                        LastName: { type: "string" },
+                        Mail: { type: "string" },
+                        //Phone: { type: "string" },
+                        AmountOfOrders: { type: "number" },
+                        AmountOfInvoices: { type: "number" }
+                    }
+                }
+            },
+            pageSize: 20,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true
+        });
+
         $(document).ready(function () {
-
-            var datasource = new kendo.data.DataSource({
-                type: "odata",
-                transport: {
-                    read: {
-                        type: 'GET',
-                        url: '/odata/Customers',
-                        dataType: 'json'
-                    }
-                },
-                schema: {
-                    data: function (data) { return data.value; },
-                    total: function (data) { return data['odata.count']; },
-                    model: {
-                        fields: {
-                            Id: { type: "number" },
-                            FirstName: { type: "string" },
-                            LastName: { type: "string" },
-                            Mail: { type: "string" },
-                            //Phone: { type: "string" },
-                            AmountOfOrders: { type: "number" },
-                            AmountOfInvoices: { type: "number" }
-                        }
-                    }
-                },
-                pageSize: 20,
-                serverPaging: true,
-                serverFiltering: true,
-                serverSorting: true
-            });
-
 
             $("#grid").kendoGrid({
                 dataSource: datasource,
                 height: 550,
-                //sortable: true,
+                sortable: true,
                 filterable: {mode: "row"},
                 pageable: true,
                 columns: [
                     { field: "Id", title: "Id", filterable: false },
-                    { field: "FirstName", title: "First Name" },
-                    { field: "LastName", title: "Last Name" },
+                    { field: "FirstName", title: "First Name"},
+                    { field: "LastName", title: "Last Name"},
                     { field: "Mail" },
                     //{ field: "Phone" },
                     { field: "AmountOfOrders", title: "Amount of Orders" },
@@ -67,5 +68,54 @@
             });
         });
 
+
+        function createChart() {
+
+           
+
+            $("#chart").kendoChart({
+                dataSource: datasource,
+                title: {
+                    text: "Users Orders and Invoices"
+                },
+                legend: {
+                    position: "top"
+                },
+                seriesDefaults: {
+                    type: "line"
+                },
+                series: [{
+                    field: "AmountOfOrders",
+                    name: "AmountOfOrders"
+                },
+                {
+                    field: "AmountOfInvoices",
+                    name: "AmountOfInvoices"
+                }],
+                categoryAxis: {
+                    field: "LastName",
+                    labels: {
+                        rotation: -90
+                    },
+                    crosshair: {
+                        visible: true
+                    }
+                },
+                valueAxis: {
+                    labels: {
+                        format: "N0"
+                    },
+                    majorUnit: 20
+                },
+                tooltip: {
+                    visible: true,
+                    shared: true,
+                    format: "N0"
+                }
+            });
+        }
+
+        $(document).ready(createChart);
+        $(document).bind("kendo:skinChange", createChart);
     </script>
 }
