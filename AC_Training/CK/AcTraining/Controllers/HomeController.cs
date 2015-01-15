@@ -39,5 +39,11 @@ namespace AcTraining.Controllers
 
             return View();
         }
+
+        public ActionResult GridAberWirklich()
+        {
+
+            return View();
+        }
     }
 }

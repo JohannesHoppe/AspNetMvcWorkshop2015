@@ -30,5 +30,14 @@ namespace AcTraining.Controllers
 			return View(customer);
 
 		}
+
+		public ActionResult Grid()
+		{
+			return View();
+		}
+		public ActionResult LineChart()
+		{
+			return View();
+		}
 	}
 }
