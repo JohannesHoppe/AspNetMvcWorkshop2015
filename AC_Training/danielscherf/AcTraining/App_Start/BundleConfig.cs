@@ -12,7 +12,7 @@ namespace AcTraining
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/knockout-{version}.js",
                         "~/Scripts/knockout.mapping-latest.debug.js",
-                        //"~/Scripts/app/*.js",
+                        "~/Scripts/app/*.js",
                         "~/Scripts/kendo/2014.2.716/kendo.all.min.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

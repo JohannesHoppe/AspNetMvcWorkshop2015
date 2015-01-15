@@ -1,0 +1,43 @@
+﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" }) 
+
+
+<div id="index_template">
+
+    <h1 data-bind="text: header">Kunden</h1>
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+    
+    <div>
+        
+        <div class="panel panel-default pull-left col-md-5 " style="padding:0; margin-right: 20px;">
+
+            <img src="http://www.gravatar.com/avatar/1?d=wavatar&f=y" class="img-thumbnail pull-right" />
+            <div class="panel-heading">Name</div>
+            <div class="panel-body">
+
+                <form class="form-horizontal">
+
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label">#</label>
+                        <div class="col-sm-7">
+                            <input type="text" class="form-control">
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <br style="clear: both;">
+
+</div>
+
+@section scripts
+{
+    <script>
+        var model = new CustomerViewModel();
+        ko.applyBindings(model, $('#index_template').get(0));
+    </script>
+}

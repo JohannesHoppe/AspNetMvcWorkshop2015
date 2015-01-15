@@ -14,6 +14,7 @@
 
 @Html.ActionLink("Gehe zu Test", "Test", "Home", new { @class = "btn btn-primary btn-lg" });
 @Html.ActionLink("Reset data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg" });
+@Html.ActionLink("Knockout", "Knockout", "Home", new { @class = "btn btn-primary btn-lg" })
 <br />
 <br />
 <a href="/odata/Customers?$top=5&$skip=2" class="btn btn-warning">Beispiel Paging mit $top=5 und $skip=2</a>
@@ -23,6 +24,9 @@
 <a href="/odata/Customers?$filter=FirstName eq 'Hans'" class="btn btn-warning">$filter=FirstName eq 'Hans'</a>
 <br />
 <a href="/Home/Grid" class="btn btn-warning">Go to Grid</a>
+
+<br />
+
 
 
 @section footer
