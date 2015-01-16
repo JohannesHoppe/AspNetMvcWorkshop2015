@@ -1,4 +1,4 @@
-﻿var CustomerViewModel = function() {
+var CustomerViewModel = function() {
 
     var self = this;
 
