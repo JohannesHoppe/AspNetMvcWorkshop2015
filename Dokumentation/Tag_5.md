@@ -7,7 +7,9 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
     1. [Installation und Beispielanwendung](#installation)
     2. [SignalR Chat](#chat)
     3. [Kunde löschen mit Broadcast](#customer)
-2. JavaScript Unit-Tests
+2. [JavaScript Unit-Tests](#unittest)
+    1. [Einführung in Jasmine](#jasmine)
+    2. [Verwendung von Karma](#karma)
 
 
 <a name="signalr"></a>
@@ -197,6 +199,137 @@ $.connection.hub.start().done(function () {
 
 Mehr Informationen zu SignalR finden sich in der Dokumentation auf [http://www.asp.net/signalr](http://www.asp.net/signalr).
 
+
+
+
+
+<a name="unittest"></a>
+## 2. JavaScript-Code mit Karma und Jasmine testen
+
+<a name="jasmine"></a>
+### 2.1 Einführung in Jasmine
+
+![JavaScript](Images/best_practices_logo.png)
+http://johanneshoppe.github.io/JsBestPractices/#/5
+
+<a name="karma"></a>
+### 2.2 Verwendung von Karma
+
+Um Unit-Tests für JavaScript zu schreiben, verwendet man am Besten einen so genannten Test-Runner. Empfehlenswert ist der Test-Runner "Karma", welcher von Google entwickelt wurde. Das Tool basiert auf Node.js und läuft somit auf allen gängigen Betriebssystemen. Erwähnenswert ist die Tatsache, dass Karma einen eigenen Webserver startet und dann einen echten Browser (z.B. den Internet Explorer, Firefox und Chrome) die JavaScript-Dateien ausführen lässt. Der eigene Webserver zeichnet Karma aus und vermeidet technische Probleme, die man bei der Ausführung per lokalem Dateisystem hätte. 
+
+Die Installation von Karma ist sehr einfach. Es ist zunächst notwendig, Node.js zu installieren damit der Befehl "npm" befehlt zur Verfügung steht. Man kann, wie auf der Website von Karma beschrieben, den Test-Runner und alle Plugins per Kommandozeilenbefehl installieren. Komfortabler und vor allem reproduzierbarer ist es jedoch, eine Datei namens `package.json` in das gewünschte Verzeichnis zu legen. Danach lassen such durch den Befehl `npm install` alle notwendigen Dateien herunter laden:
+
+##### package.json zur Installation von Karma 
+~~~~~
+{
+    "name" : "karma-testrunner-and-depedencies",
+    "version" : "1.0.0",
+    "description" : "Installs Karma Testrunner and dependencies",
+    "dependencies" : {
+        "karma": "~0.12.31",
+        "karma-jasmine": "~0.3.3",
+        "jasmine-core": "~2.1.3",
+        "karma-requirejs": "~0.2.2",
+        "karma-chrome-launcher": "~0.1.4",
+        "karma-ie-launcher": "~0.1.5",
+        "karma-cli": "~0.0.4"
+    },
+    "private": true
+}
+~~~~~
+
+Anschließend benötigt das Projekt eine Konfigurationsdatei, welche den standardmäßig Namen `karma.conf.js` trägt. Der Befehl `karma init` startet ein Kommandozeilen-Dialog, welcher bei der Erstellung der Datei hilft. In den letzten beiden Artikeln der Serie wurden alle JavaScript-Dateien im AMD-Format definiert, entsprechend ist das Plugin `karma-requirejs` zum Laden der Dateien notwendig. Durch die Verwendung von require.js benötigt man lediglich eine spezielle Konfigurations-Datei, welche hier `require.config.karma.js` genannt wird.
+
+##### karma.conf.js zur Konfiguration von Karma 
+~~~~~
+module.exports = function(config) {
+    config.set({
+
+        basePath: 'AC_Training/Hoppe/AcTraining/Scripts',
+        frameworks: ['jasmine', 'requirejs'],
+        files: [
+            'require.config.karma.js',
+            { pattern: '**/*.js', included: false }
+        ],
+        browsers: ['Chrome']
+    });
+};
+~~~~~
+
+Mit der Datei `require.config.karma.js` werden vor allem Pfade und so genannte "Shims" für die Abwärtskompatibel festgelegt. Während zum Beispiel der Standardpfad für JavasScript-Dateien in einer ASP.NET MVC Anwendung `/Scripts` lautet, wird in der Karma-Welt stets der Ordner `/base` verwendet (siehe `baseUrl`).   
+
+##### require.config.karma.js zur Konfiguration des Modul-Loaders require.js 
+~~~~~
+requirejs.config({
+    
+    baseUrl: '/base', // !!!
+    
+    paths: {
+        'jquery': 'jquery-1.10.2',
+        'kendo': 'kendo/2014.2.716/kendo.all.min'
+    },
+    shim: {
+        kendo: { deps: ['jquery'] }
+    },
+    deps: (function() {
+
+        var allTestFiles = [];
+
+        Object.keys(window.__karma__.files).forEach(function(file) {
+          if (/Spec\.js$/.test(file)) {
+            allTestFiles.push(file.replace(/^\/base\//, '').replace(/\.js$/, ''));
+          }
+        });
+            
+        return allTestFiles;
+    })(),
+    callback: window.__karma__.start
+});
+
+
+~~~~~
+
+Es bietet sich an, eine Konvention für die Dateinamen der Test-Dateien zu verwenden. Wenn das zu testende AMD-Modul `helloWorld` heißt, so sollte man am Besten das Modul für den Unit-Test `helloWorldSpec` zu nennen:
+
+![Abbildung 2](Images/image02_konvention.png)
+##### Konvention für die Benennung der Test-Module
+
+
+Da der Name des AMD-Moduls und der Dateiname (ohne Dateiendung) gleich sind, kann man die globale Variable `window.__karma__.files` nach Einträgen mit der Endung "Spec.js" durchsuchen, die Dateiendung entfernen und anschließend alle Module per require.js laden. Dies geschieht in der Funktion die beim Konfigurations-Eintrag `deps` angegeben wurde.      
+
+Es fehlt noch ein Test-Framework, welches idealerweise eine vergleichbare BDD-Syntax wie MSpec besitzt. Diese Syntax bietet das Test-Framework Jasmine. Das folgende Script definiert einen Test, welcher das simple AMD-Modul `helloWorld` testet:
+
+##### helloWorld.js mit dem AMD-Modul "helloWorld"
+~~~~~
+define([], function () {
+
+    return {
+        say: function() {
+            return "Hello World";
+        }
+    }
+});
+~~~~~ 
+
+
+##### helloWorldSpec.js mit dem AMD-Modul "helloWorldSpec"
+~~~~~
+define(['helloWorld'], function(helloWorld) {
+
+    describe('helloWorld', function () {
+        it('should say hello', function() {
+            expect(helloWorld.say()).toEqual("Hello World");
+        });
+    });
+
+});
+~~~~~ 
+
+Der `define`-Befehle kennzeichnet das AMD-Format. Der Test selbst lädt das zu testende Modul als Abhängigkeit nach. Neu sind die Befehle "describe", "it", "expect" und "beforeEach" welche von Jasmine gestellt werden. Mittels des Befehls `karma start` lässt sich nun dieser erste JavaScript Unit-Test ausführen. Das Ergebnis des Unit-Tests wird auf der Kommandozeile ausgegeben. Es öffnet sich ebenso ein Browser, der die Entwicklung und die Fehlersuche in einem Test in einer gewohnten Debugging-Umgebung ermöglicht.  
+
+![Abbildung 4](Images/image03_karma1.png)
+![Abbildung 4](Images/image03_karma2.png)
+##### Ein erfolgreicher Test mit dem Karma-Testrunner
 
 <hr>
 

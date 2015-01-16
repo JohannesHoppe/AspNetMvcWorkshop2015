@@ -4,7 +4,7 @@
     
     paths: {
         'jquery': 'jquery-1.10.2',
-        'kendo': 'kendo/kendo.all.min'
+        'kendo': 'kendo/2014.2.716/kendo.all.min'
     },
     shim: {
         kendo: {
