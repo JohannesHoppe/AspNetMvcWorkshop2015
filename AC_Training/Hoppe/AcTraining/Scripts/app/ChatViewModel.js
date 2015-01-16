@@ -5,10 +5,10 @@
     self.name = ko.observable();
     self.message = ko.observable();
     self.messages = ko.observableArray();
-    self.chatOpen = ko.observable(false);
+    self.chatActive = ko.observable(false);
 
     self.toggleChat = function() {
-        self.chatOpen(!self.chatOpen());
+        self.chatActive(!self.chatActive());
     }
 
     var chatHub = $.connection.chatHub;

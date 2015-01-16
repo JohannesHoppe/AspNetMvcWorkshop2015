@@ -4,10 +4,10 @@
     <div id="chat_template">
 
         <button class="btn btn-info" data-bind="click: toggleChat">Chat starten</button>
-        
+
         <hr/>
 
-        <div style="display:none" data-bind="visible: chatOpen">
+        <div style="display:none" data-bind="fadeVisible: chatActive">
 
             <form class="form-horizontal">
                 <div class="form-group">
@@ -39,6 +39,17 @@
 
 </div>
 
+<style>
+    
+.fa-spin {
+    -webkit-animation: spin 30s infinite linear;
+    -moz-animation: spin 30s infinite linear;
+    -o-animation: spin 30s infinite linear;
+    animation: spin 30s infinite linear;
+}    
+
+</style>
+
 <div id="index_template">
     
     <h1 data-bind="text: header">Kunden</h1>
@@ -48,6 +59,10 @@
         <span class="sr-only">Error:</span>
         Very urgent error!
     </div>
+    
+    <button class="btn btn-info" data-bind="click: loadData">
+        <i class="fa-spin glyphicon glyphicon-floppy-saved"></i> Reload
+</button>
 
     <div data-bind="foreach: customers">
         
@@ -95,6 +110,10 @@
                         </div>
 
                     </div>
+                    
+                    <button type="button" class="btn btn-danger" data-bind="click: $root.deleteCustomer">
+                        <i class="glyphicon glyphicon-trash"></i> Delete
+                    </button>
 
                 </form>
             </div>
