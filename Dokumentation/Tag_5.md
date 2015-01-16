@@ -10,6 +10,7 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 2. [JavaScript Unit-Tests](#unittest)
     1. [Einführung in Jasmine](#jasmine)
     2. [Verwendung von Karma](#karma)
+3. [Buchempfehlungen](#buch)
 
 
 <a name="signalr"></a>
@@ -330,6 +331,26 @@ Der `define`-Befehle kennzeichnet das AMD-Format. Der Test selbst lädt das zu t
 ![Abbildung 4](Images/image03_karma1.png)
 ![Abbildung 4](Images/image03_karma2.png)
 ##### Ein erfolgreicher Test mit dem Karma-Testrunner
+
+
+
+
+<a name="unittest"></a>
+## 3. Buchempfehlungen
+
+
+[![Book cover](https://raw.github.com/JohannesHoppe/DeveloperMediaDemo/master/Documentation/images/06_01_javascript_patterns.png)](http://www.amazon.com/dp/0596806752)
+A great book is ["JavaScript Patterns"](http://www.amazon.com/dp/0596806752) from Stoyan Stefanov. It explains in detail the required patterns for a solid JavaScript-driven website! 
+
+[![Book cover](images/book_essentialjsdesignpatterns.png)](http://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+Another great one is [Learning JavaScript Design Patterns](http://addyosmani.com/resources/essentialjsdesignpatterns/book/) from Addy Osmani.
+
+[![Book cover](Images/rest_in_practice.png)](http://restinpractice.com/)
+["REST in Practice"](http://restinpractice.com/) will teach you the spirit of REST while being easy to understand and read! 
+
+[![Book cover](Images/book_jquery_in_action.jpg)](http://www.manning.com/bibeault2/)
+["jQuery in Action"](http://www.manning.com/bibeault2/) covers details where other books still introduce boring topics! 
+
 
 <hr>
 
