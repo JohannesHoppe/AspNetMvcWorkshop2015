@@ -1,17 +1,58 @@
 ﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target = "_blank" })
 
 
-<div id="index_template">
+<div id="chat_template">
 
-    <h1 data-bind="text: header">Kunden</h1>
+    @*<h1 data-bind="text: header">SignalR Chat!</h1>*@
+    <h1>SignalR Chat!</h1>
+
+    <div class="panel-body">
+
+        <form class="form-horizontal">
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" data-bind="value: name">
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class="col-sm-2 control-label">Message</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" data-bind="value: message">
+                </div>
+            </div>
+            <button class="btn btn-warning" data-bind="click: sendMessage">Send!</button>
+
+        </form>
+
+        <h2>Messages</h2>
+
+        <ul data-bind="foreach: messages">
+            <li>
+                Name:<span data-bind="text: name"> </span>;
+                Nachricht:<span data-bind="text: message"> </span>;
+            
+            </li>
+        </ul>
+    </div>
+</div>
+
+@*<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>*@
+
+<div id="index_template">
     
-    @*<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>*@
+   
+        <button class="btn btn-info" data-bind="click: loadData">
+            <i class="glyphicon glyphicon-floppy-disk"></i>
+        </button>
 
     <div data-bind="foreach: customers">
 
         <div class="panel panel-default pull-left col-md-5 " style="padding:0; margin-right: 20px;">
 
-           @* <img src="http://www.gravatar.com/avatar/1?d=wavatar&f=y" class="img-thumbnail pull-right" />*@
+            @* <img src="http://www.gravatar.com/avatar/1?d=wavatar&f=y" class="img-thumbnail pull-right" />*@
             <img data-bind="attr: { src: $root.getImageData($data) }" class="img-thumbnail pull-right" />
             <div data-bind="text: FirstName" class="panel-heading">Name</div>
             <div class="panel-body">
@@ -39,7 +80,9 @@
                             <input type="text" class="form-control" data-bind="value: LastName">
                         </div>
                     </div>
-
+                    <button data-bind="click: $root.deleteCustomer" type="button" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"> Delete</i>
+                    </button>
                 </form>
             </div>
         </div>
@@ -49,6 +92,7 @@
 
 </div>
 
+
 @section scripts
 {
     <script>
@@ -56,7 +100,8 @@
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
 
-
+        var chatModel = new ChatViewModel();
+        ko.applyBindings(chatModel, $('chat_template').get(0));
 
     </script>
 }

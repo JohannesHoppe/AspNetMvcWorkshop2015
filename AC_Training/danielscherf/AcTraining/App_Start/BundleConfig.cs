@@ -10,6 +10,7 @@ namespace AcTraining
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.signalR-{version}.js", // muss direkt hinter jquery sein.
                         "~/Scripts/knockout-{version}.js",
                         "~/Scripts/knockout.mapping-latest.debug.js",
                         "~/Scripts/app/*.js",

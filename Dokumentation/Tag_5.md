@@ -13,6 +13,13 @@ Ihr Trainer: [Johannes Hoppe](http://www.haushoppe-its.de) von der [conplement A
 3. [Buchempfehlungen](#buch)
 
 
+```
+<configuration>
+    <appSettings>
+        <add key="vs:EnableBrowserLink" value="false" />
+```
+
+
 <a name="signalr"></a>
 ## 1. SignalR
 

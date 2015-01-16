@@ -28,6 +28,8 @@ namespace AcTraining
             var customers = builder.EntitySet<Customer>("Customers");
             //customers.EntityType.Ignore(c => c.LastName);
 
+            builder.EntitySet<Customer>("Customers2");
+
             config.Routes.MapODataServiceRoute("odata", "odata", builder.GetEdmModel());
         }
     }
