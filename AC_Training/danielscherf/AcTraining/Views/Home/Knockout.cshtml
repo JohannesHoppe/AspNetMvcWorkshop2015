@@ -42,7 +42,11 @@
 @*<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>*@
 
 <div id="index_template">
-
+    
+   
+        <button class="btn btn-info" data-bind="click: loadData">
+            <i class="glyphicon glyphicon-floppy-disk"></i>
+        </button>
 
     <div data-bind="foreach: customers">
 
@@ -76,7 +80,9 @@
                             <input type="text" class="form-control" data-bind="value: LastName">
                         </div>
                     </div>
-
+                    <button data-bind="click: $root.deleteCustomer" type="button" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"> Delete</i>
+                    </button>
                 </form>
             </div>
         </div>
