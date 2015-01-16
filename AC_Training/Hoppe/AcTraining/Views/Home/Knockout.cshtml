@@ -1,4 +1,56 @@
-﻿<div id="index_template">
+﻿<div id="chat_template">
+    
+    
+    <div id="chat_template">
+
+        <button class="btn btn-info" data-bind="click: toggleChat">Chat starten</button>
+
+        <hr/>
+
+        <div style="display:none" data-bind="fadeVisible: chatActive">
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-1">Name</label>
+                    <input type="text" data-bind="textInput: name" class="form-control">
+
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-1">Message</label>
+                    <input type="text" data-bind="textInput: message" class="form-control">
+                </div>
+
+                <button data-bind="click: sendMessage" class="btn">Send!</button>
+            </form>
+
+            <hr />
+            <h3>Messages</h3>
+
+            <ul data-bind="foreach: messages" style="height: 100px; overflow-y: scroll ">
+                <li>
+                    <b data-bind="text: name"></b>:
+                    <span data-bind="text: message"></span>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+</div>
+
+<style>
+    
+.fa-spin {
+    -webkit-animation: spin 30s infinite linear;
+    -moz-animation: spin 30s infinite linear;
+    -o-animation: spin 30s infinite linear;
+    animation: spin 30s infinite linear;
+}    
+
+</style>
+
+<div id="index_template">
     
     <h1 data-bind="text: header">Kunden</h1>
     
@@ -7,6 +59,10 @@
         <span class="sr-only">Error:</span>
         Very urgent error!
     </div>
+    
+    <button class="btn btn-info" data-bind="click: loadData">
+        <i class="fa-spin glyphicon glyphicon-floppy-saved"></i> Reload
+</button>
 
     <div data-bind="foreach: customers">
         
@@ -54,6 +110,10 @@
                         </div>
 
                     </div>
+                    
+                    <button type="button" class="btn btn-danger" data-bind="click: $root.deleteCustomer">
+                        <i class="glyphicon glyphicon-trash"></i> Delete
+                    </button>
 
                 </form>
             </div>
@@ -69,8 +129,6 @@
     <h4>Debug</h4>
     <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
     -->
-
-
 </div>
 
 @section scripts {
@@ -79,5 +137,9 @@
         var model = new CustomerViewModel();
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
+
+        var chatModel = new ChatViewModel();
+        ko.applyBindings(chatModel, $('#chat_template').get(0));
+
     </script>
 }
