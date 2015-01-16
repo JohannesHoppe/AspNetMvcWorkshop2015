@@ -41,4 +41,20 @@
             console.log(data.value);
         });
     };
+    self.deleteCustomer = function(customer) {
+        $.ajax({
+            url: '/odata/Customers2(' + customer.Id() + ')',
+            type: 'DELETE'
+        });
+    };
+    var customerHub = $.connection.customerHub;
+    customerHub.client.customerDeleted = function (id) {
+        self.customers.remove(function(customer) {
+            return customer.Id() == id;
+        });
+    };
+    
+    $.connection.hub.start().done(function () {
+        console.log("hub gestartet!!");
+    });
 };
