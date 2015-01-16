@@ -7,7 +7,7 @@
 
     var self = this;
 
-    self.header = ko.observable("MVVM!");
+    //self.header = ko.observable("MVVM!");
     self.customers = ko.observableArray([
         {
             Id: ko.observable(0),
@@ -28,6 +28,13 @@
         });
     };
 
+    self.deleteCustomer = function(customer) {
+        $.ajax({
+            url: "/odata/Customers2(" + customer.Id() + ")",
+            type: "DELETE",
+        });
+    }
+
     self.getImageData = function (customer) {
         var path = "http://www.gravatar.com/avatar/";
         var path2 = "?d=wavatar&f=y";
@@ -39,4 +46,16 @@
     this.activeError = function () {
         this.hasError(true);
     }
+
+    var customerHub = $.connection.customerHub;
+
+    customerHub.client.customerDeleted = function(id) {
+        self.customers.remove(function(customer) {
+            return customer.Id() == id;
+        });
+    }
+
+    $.connection.hub.start().done(function () {
+        console.log("chat started!");
+    });
 }
