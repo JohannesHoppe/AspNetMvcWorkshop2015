@@ -7,7 +7,7 @@
 
     var self = this;
 
-    self.header = ko.observable("MVVM!");
+    //self.header = ko.observable("MVVM!");
     self.customers = ko.observableArray([
         {
             Id: ko.observable(0),
