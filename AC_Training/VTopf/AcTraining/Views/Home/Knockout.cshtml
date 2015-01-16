@@ -1,17 +1,48 @@
 ﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" })
 
+<div id="chat_template">
+    <div class="panel-body ">
+        <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
+
+            <h2>SignalR-Chat</h2>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-7">
+                        <input id="name" type="text" class="form-control" data-bind="textInput: name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Message</label>
+                    <div class="col-sm-7">
+                        <input id="message" type="text" class="form-control" data-bind="textInput: message" />
+                    </div>
+                </div>
+            </form>
+            <button class="btn btn-primary btn-lg" id="sendMessage" data-bind="click: sendMessage">Send Message!</button>
+            <h3>Messages</h3>
+            <div data-bind="foreach: messages">
+                <li>
+                    <b data-bind="text: name"></b>
+                    <span data-bind="text: message"></span>
+                </li>
+            </div>
+            <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+        </div>
+    </div>
+</div>
 
 <div id="index_template">
 
-    <h1 data-bind="text: header, style: {color: color}">Kunden</h1>
+    <!--<h1 data-bind="text: header, style: {color: color}">Kunden</h1>
 
-    <input type="text" data-bind="textInput: header" />
+    <input type="text" data-bind="textInput: header" />-->
 
-    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+    <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
-    <h1 data-bind="text: smilie, style: {color: color}">:-(</h1>
+    <!--<h1 data-bind="text: smilie, style: {color: color}">:-(</h1>
 
-    <button data-bind="click: function() { setColor(); changeText() }">Klick mich</button>
+    <button data-bind="click: function() { setColor(); changeText() }">Klick mich</button>-->
     <div data-bind="foreach: customers">
 
         <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
@@ -65,7 +96,7 @@
 @section scripts{
     <script>
         var model = new CustomerViewModel();
-        
+
         ko.bindingHandlers.my_kendo_datepicker = {
             init: function (element, valueAccessor) {
                 var options = valueAccessor() || {};
@@ -75,6 +106,9 @@
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
 
-        
+        var chatModel = new ChatViewModel();
+        ko.applyBindings(chatModel, $('#chat_template').get(0));
+
+
     </script>
 }
