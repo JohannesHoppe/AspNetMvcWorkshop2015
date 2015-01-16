@@ -1,50 +1,53 @@
-﻿
+﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" })
 
 <div id="chat_template">
+    <div class="panel-body ">
+        <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
 
-    <h1> SignalR Chat</h1>
-
-    <label class="col-sm-2 control-label">Name</label>
-    <input type="text" class="form-control" data-bind="txtInput:name ">
-
-    <label class="col-sm-2 control-label">Message</label>
-    <input type="text" class="form-control" data-bind="txtInput:message ">
-
-    <button data-bind="click: SendMessage" id="test" class="btn btn-warning btn-lg">SEND </button>
-
-    <div data-bind="foreach: messages">
-        
-        <label class="col-sm-2 control-label">From</label>
-        <input type="text" class="form-control" data-bind="value:name ">
-
-        <label class="col-sm-2 control-label">Received Message</label>
-        <input type="text" class="form-control" data-bind="value:message ">
-
-    </div>   
-
-
+            <h2>SignalR-Chat</h2>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-7">
+                        <input id="name" type="text" class="form-control" data-bind="textInput: name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Message</label>
+                    <div class="col-sm-7">
+                        <input id="message" type="text" class="form-control" data-bind="textInput: message" />
+                    </div>
+                </div>
+            </form>
+            <button class="btn btn-primary btn-lg" id="sendMessage" data-bind="click: sendMessage">Send Message!</button>
+            <h3>Messages</h3>
+            <div data-bind="foreach: messages">
+                <li>
+                    <b data-bind="text: name"></b>
+                    <span data-bind="text: message"></span>
+                </li>
+            </div>
+            <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+        </div>
+    </div>
 </div>
 
 <div id="index_template">
 
-    <h1 data-bind="text: header">Kunden</h1>
+    <!--<h1 data-bind="text: header, style: {color: color}">Kunden</h1>
 
-<!-- <input type="text" data-bind="textInput: header"/>
-
-<button data-bind="click: setColor">KlickMich</button>
-
--->
+    <input type="text" data-bind="textInput: header"/>
 
 
-<div>
-
-    <div data-bind="foreach: customers">
-
+    <button data-bind="click: function() { setColor(); changeText() }">Klick mich</button>-->
+    
+<div data-bind="foreach: customers">
 
         <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
 
-            <img data-bind="attr:{ src: $root.image($data)  }" class="img-thumbnail pull-right" />
-            <div class="panel-heading" data-bind="text: FirstName"></div>
+            <!-- <img src="http://www.gravatar.com/avatar/1?d=wavatar&f=y" class="img-thumbnail pull-right"/>-->
+            <img data-bind="attr: {src: $root.getCustomerImage($data)}" class="img-thumbnail pull-right" />
+            <div class="panel-heading" data-bind="text: FirstName">Name</div>
             <div class="panel-body">
 
                 <form class="form-horizontal">
@@ -53,62 +56,59 @@
 
                         <label class="col-sm-2 control-label">#</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" data-bind="value:Id">
+                            <input type="text" class="form-control" data-bind="textInput: Id">
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">FirstName</label>
+                        <label class="col-sm-2 control-label">First Name</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" data-bind="value:FirstName">
+                            <input type="text" class="form-control" data-bind="textInput: FirstName">
                         </div>
                     </div>
-
-
                     <div class="form-group">
-
-                        <label class="col-sm-2 control-label">LastName</label>
+                        <label class="col-sm-2 control-label">Last Name</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" data-bind="value:LastName">
+                            <input type="text" class="form-control" data-bind="textInput: LastName">
                         </div>
-
                     </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Date of Birth</label>
+                        <div class="col-sm-7">
+                            <input type="text"
+                                class="datepicker"
+                                data-bind="textInput: DateOfBirth,
+                                my_kendo_datepicker: { format: 'dd.MM.yyyy' }" />
+                        </div>
+                    </div>
+                    <button type="button" data-bind="click: $root.deleteCustomer " class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i> Delete
+                    </button>
 
                 </form>
             </div>
         </div>
+
     </div>
-</div>
 
     <br style="clear: both;">
-
-
-
 </div>
 
-@section scripts
-{
+@section scripts{
     <script>
         var model = new CustomerViewModel();
+
+        ko.bindingHandlers.my_kendo_datepicker = {
+            init: function (element, valueAccessor) {
+                var options = valueAccessor() || {};
+                $(element).kendoDatePicker(options);
+            }
+        };
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
 
         var chatModel = new ChatViewModel();
         ko.applyBindings(chatModel, $('#chat_template').get(0));
 
-        var chatHub = $.connection.chatHub;
-        $.connection.hub.start().done(function() {
-            console.log("hubs gestartet");
-
-            chatHub.server.send("hallo", "welt");
-        });
-
-        debugger;
-        chatHub.client.broadcastMessage = function(name, message) {
-            console.log(name, message);
-        }
 
     </script>
-
 }
-
