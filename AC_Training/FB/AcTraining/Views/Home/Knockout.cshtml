@@ -2,6 +2,45 @@
 @Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" }) 
 
 
+<p></p>
+<div id="chat_template">
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <h1>SignalR Chat</h1>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-7">
+                    <input data-bind="textInput: name" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Message</label>
+                <div class="col-sm-7">
+                    <input data-bind="textInput: message" type="text" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <button data-bind="click: sendMessage">Send!</button>
+            </div>
+            <div class="form-group">
+                <h2>Messages</h2>
+                <div data-bind="foreach: messages">
+                    <div class="form-group">
+                        <span data-bind="text: name" style="font-size: large">name</span>
+                        <span style="font-size: large">:&nbsp;</span>
+                        <span data-bind="text: message" style="font-size: large">message</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+    </div>
+</div>
+
+
+
 <div id="index_template">
     <h1 data-bind="text: header, style: { color: color }">Kunden</h1>
     <input data-bind="textInput: header" />
@@ -48,5 +87,19 @@
         var model = new CustomerViewModel();
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
+
+        var chat = new ChatViewModel();
+        ko.applyBindings(chat, $('#chat_template').get(0));
+
+        //var chatHub = $.connection.chatHub;
+        //$.connection.hub.start().done(function () {
+        //    console.log("hubs gestartet!");
+
+        //    chatHub.server.send("Hello", "World");
+        //});
+
+        //chatHub.client.broadcastMessage = function (name, message) {
+        //    console.log(name, message);
+        //};
     </script>
 }

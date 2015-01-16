@@ -1,6 +1,41 @@
 ﻿@Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target="_blank" }) 
 
 
+<div id="chat_template">
+    <h1 data-bind="style: {color: 'blue' }">SignalR Chat</h1>
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="textInput: name">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Message</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" data-bind="textInput: message">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="col-sm-2 btn btn-default" data-bind="click: sendMessage">Send!</button>
+        </div>
+    </form>
+
+    <h2 data-bind="style: {color: 'blue' }">Messages</h2>
+    <ul data-bind="foreach: messages">
+        <li>
+            <span data-bind="text: name"> </span>:
+            <span data-bind="text: message"> </span>
+        </li>
+    </ul>
+
+</div>
+
+<hr/>
+
 <div id="index_template">
 
     <h1 data-bind="text: header, style: {color: color }">Kunden</h1>
@@ -55,6 +90,8 @@
         var model = new CustomerViewModel();
         ko.applyBindings(model, $('#index_template').get(0));
         model.loadData();
-    </script>
 
+        var chatModel = new ChatViewModel();
+        ko.applyBindings(chatModel, $('#chat_template').get(0));
+    </script>
 }
