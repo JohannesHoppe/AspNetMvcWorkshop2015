@@ -38,8 +38,6 @@
 
     <button data-bind="click: setColor">Klick mich</button>
 
-    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
-
     <div data-bind="foreach: customers">
 
         <div class="panel panel-default pull-left col-md-5 " style="padding: 0; margin-right: 20px;">
@@ -74,10 +72,17 @@
                         </div>
 
                     </div>
+                  
+                    <button type="button" data-bind="click: $root.deleteCustomer" class="btn btn-danger" >
+                        <i class="glyphicon glyphicon-trash"></i> Delete
+                    </button>
                 </form>
             </div>
         </div>
     </div>
+
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+
 </div>
 
 <br style="clear: both;">

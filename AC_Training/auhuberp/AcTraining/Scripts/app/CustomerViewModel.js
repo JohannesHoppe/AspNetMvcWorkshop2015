@@ -21,12 +21,32 @@
         return "http://www.gravatar.com/avatar/"+data.Id()+"?d=wavatar&f=y";
     };
     
+    self.deleteCustomer = function(customer) {
+        $.ajax({
+            url: '/odata/Customers2(' + customer.Id() + ')',
+            type: 'DELETE'
+        });
+    };
+    
     self.loadData = function () {
-        $.get('/odata/Customers?$top=10')
+        $.get('/odata/Customers2?$top=10')
         .success(function (data) {
             self.customers = ko.mapping.fromJS(data.value, {}, self.customers);
             console.log(data.value);
         });
     };
+
+    var customerHub = $.connection.customerHub;
+    
+    customerHub.client.customerDeleted = function(id) {
+        self.customers.remove(function(customer) {
+            return customer.Id() == id;
+        });
+    };
+
+    $.connection.hub.start().done(function () {
+        console.log("hubs gestartet!");
+    });
+    
 
 }
