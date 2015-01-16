@@ -7,8 +7,9 @@ namespace AcTraining
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include( // Reihenfolge der folgenden ist wichtig
                         "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery.signalR-{version}.js",
                         "~/Scripts/kendo/2014.2.716/kendo.all.min.js",
                         "~/Scripts/knockout-{version}.js",
                         "~/Scripts/knockout.mapping-latest.js",
