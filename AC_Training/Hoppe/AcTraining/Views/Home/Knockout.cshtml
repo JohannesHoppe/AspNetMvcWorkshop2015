@@ -39,16 +39,6 @@
 
 </div>
 
-<style>
-    
-.fa-spin {
-    -webkit-animation: spin 30s infinite linear;
-    -moz-animation: spin 30s infinite linear;
-    -o-animation: spin 30s infinite linear;
-    animation: spin 30s infinite linear;
-}    
-
-</style>
 
 <div id="index_template">
     
@@ -61,7 +51,7 @@
     </div>
     
     <button class="btn btn-info" data-bind="click: loadData">
-        <i class="fa-spin glyphicon glyphicon-floppy-saved"></i> Reload
+        <i data-bind="css: { 'glyphicon-spin' : $root.isSyncing }" class="glyphicon glyphicon glyphicon-refresh"></i> Reload
 </button>
 
     <div data-bind="foreach: customers">
@@ -125,10 +115,10 @@
  
     @Html.ActionLink("Reset Data", "Reset", "api", null, new { @class = "btn btn-warning btn-lg", target = "_blank" })
    
-    <!--
+ 
     <h4>Debug</h4>
     <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
-    -->
+
 </div>
 
 @section scripts {

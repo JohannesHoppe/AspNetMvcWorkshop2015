@@ -5,6 +5,7 @@ var CustomerViewModel = function() {
     self.header = ko.observable("MVVM!");
     self.customers = ko.observableArray();
     self.hasError = ko.observable(false);
+    self.isSyncing = ko.observable(false);
 
     self.loadData = function() {
 
@@ -14,7 +15,11 @@ var CustomerViewModel = function() {
             })
             .error(function() {
                 self.hasError(true);
+            }).done(function() {
+                self.isSyncing(false);
             });
+
+        self.isSyncing(true);
     };
 
     self.deleteCustomer = function(customer) {
