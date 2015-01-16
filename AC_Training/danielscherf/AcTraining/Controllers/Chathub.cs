@@ -10,7 +10,7 @@ namespace AcTraining.Controllers
     {
         public void Send(string name, string message)
         {
-            Clients.All.broadcastmessage(name, message);
+            Clients.All.broadcastMessage(name, message);
         }
     }
 }

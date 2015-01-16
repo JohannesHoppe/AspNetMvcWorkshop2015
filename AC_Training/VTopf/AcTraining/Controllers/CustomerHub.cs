@@ -6,11 +6,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace AcTraining.Controllers
 {
-    public class ChatHub : Hub
+    public class CustomerHub : Hub
     {
-        public void Send(string name, string message)
-        {
-            Clients.All.broadcastmessage(name, message);
-        }
     }
 }

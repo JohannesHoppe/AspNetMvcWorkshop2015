@@ -72,6 +72,11 @@
                             <input data-bind="textInput: LastName" type="text" class="form-control">
                         </div>
                     </div>
+
+                    <button type="button" data-bind="click: $root.deleteCustomer" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-trash"></i> Delete
+                    </button>
+
                 </form>
             </div>
         </div>
