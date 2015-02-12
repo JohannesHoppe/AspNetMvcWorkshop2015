@@ -25,7 +25,7 @@ Fehlende Nuget Pakete:
 <a name="odata"></a>
 ## 2. OData
 
-Der bestehende Web API Controller kann durch ein paar Änderungen um die Funktionalität von OData ergänzt werden. Der Controller muss hierzu vom "ODataController" erben. Es ist notwendig, dass die Funktionalität per `[EnableQuery]` explizit freigeschaltet wird. Wir ändern die CustomersController wie folgt ab:
+Der bestehende Web API Controller kann durch ein paar Änderungen um die Funktionalität von OData ergänzt werden. Der Controller muss hierzu vom "ODataController" erben. Es ist notwendig, dass die Funktionalität per `[EnableQuery]` explizit freigeschaltet wird. Wir ändern den CustomersController wie folgt ab:
 
 ~~~~~
 public class CustomersController : ODataController
